@@ -1,44 +1,44 @@
-# Project Name #
+# Project Name
 
-<!-- 
-> This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
+## Heading
 
-There is an approach called "working backwards" that is widely used at Amazon. They work backwards from the customer, rather than starting with an idea for a product and trying to bolt customers onto it. While working backwards can be applied to any specific product decision, using this approach is especially important when developing new products or features.
+> Mechanic Helper
 
-For new initiatives a product manager typically starts by writing an internal press release announcing the finished product. The target audience for the press release is the new/updated product's customers, which can be retail customers or internal users of a tool or technology. Internal press releases are centered around the customer problem, how current solutions (internal or external) fail, and how the new product will blow away existing solutions.
+## Sub-Heading
 
-If the benefits listed don't sound very interesting or exciting to customers, then perhaps they're not (and shouldn't be built). Instead, the product manager should keep iterating on the press release until they've come up with benefits that actually sound like benefits. Iterating on a press release is a lot less expensive than iterating on the product itself (and quicker!).
+Mechanic Helper is a new tool for both professional and enthusiast mechanics to keep track of maintenance and make working
+on your vehicle easier.
 
-If the press release is more than a page and a half, it is probably too long. Keep it simple. 3-4 sentences for most paragraphs. Cut out the fat. Don't make it into a spec. You can accompany the press release with a FAQ that answers all of the other business or execution questions so the press release can stay focused on what the customer gets. My rule of thumb is that if the press release is hard to write, then the product is probably going to suck. Keep working at it until the outline for each paragraph flows. 
+## Summary
 
-Oh, and I also like to write press-releases in what I call "Oprah-speak" for mainstream consumer products. Imagine you're sitting on Oprah's couch and have just explained the product to her, and then you listen as she explains it to her audience. That's "Oprah-speak", not "Geek-speak".
+Mechanic Helper keeps track of your maintenance schedules for you and then reminds you when its time to perform them. You can pick from recommended maintenance or create any custom task and schedule.
 
-Once the project moves into development, the press release can be used as a touchstone; a guiding light. The product team can ask themselves, "Are we building what is in the press release?" If they find they're spending time building things that aren't in the press release (overbuilding), they need to ask themselves why. This keeps product development focused on achieving the customer benefits and not building extraneous stuff that takes longer to build, takes resources to maintain, and doesn't provide real customer benefit (at least not enough to warrant inclusion in the press release).
- -->
- 
-## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+When you're working on your vehicle, Mechanic Helper will be your smart assistant. You can tell it to add a part to your wish list, or ask it specifications for the part your working on so you dont have to touch your manual.
 
-## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+## Problem
 
-## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+This assistant was designed with mechanics in mind. Keeping track of many regular maintenance intervals on many cars is a pain. Now you can set it and forget it until its time to get it done.
 
-## Problem ##
-  > Describe the problem your product solves.
+Mechanic Helper also solves the problem of endlessly needing to go back and forth to your manual to write down parts you need or look up how to work on a part.
 
-## Solution ##
-  > Describe how your product elegantly solves the problem.
+## Solution
 
-## Quote from You ##
-  > A quote from a spokesperson in your company.
+Mechanic Helper lets you add cars to your virtual garage. You can pick from a list of cars with pre made schedules, or you can create your very own custom list. When it comes time to perform the task, Mechanic Helper will email you to let you know to perform your maintenance.
 
-## How to Get Started ##
-  > Describe how easy it is to get started.
+When it comes time to work on your vehicle, you can set up a list of numbers (such as torque settings) or anything else you need ahead of time. And then when you're working on your car, you can ask your google assistant to tell you anything from that list.
 
-## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+## Quote from You
 
-## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+Mechanic Helper is designed with the modern car enthusiast in mind to automate the trivial tasks of working on vehicles so that you can focus on the important things.
+
+## How to Get Started
+
+Simply create an account in less then 5 minutes, then follow the quick tutorial to add your first car to your garage! Mechanic Helper can be up and running in less than 15 minutes.
+
+## Customer Quote
+
+I used to hate keeping track of all of my unique maintenance for my older sports car, and when it came time to work on it, constantly getting out from under it to reference the manual was very frustrating. Now that I use Mechanic Helper, those tasks could never be easier.
+
+## Closing and Call to Action
+
+Check out mechanichelper.com and get your car maintenance organized.
