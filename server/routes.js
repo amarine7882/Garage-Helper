@@ -1,8 +1,11 @@
-const router = require('express').Router();
+const express = require('express');
+
 const controller = require('./controllers');
+
+const router = express.Router();
 
 router.get('/cars/:carID', controller.cars.get);
 
-router.post('/cars', controller.cars.post);
+router.post('/cars', express.json(), controller.cars.post);
 
 module.exports = router;
