@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
+import generateModelYears from '../../utils/helpers';
+
 export default class NewCarForm extends Component {
   constructor(props) {
     super(props);
@@ -10,10 +12,11 @@ export default class NewCarForm extends Component {
       carName: '',
       make: '',
       model: '',
-      year: 2000,
+      modelYear: 2000
     };
 
     this.handleFormInput = this.handleFormInput.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleFormInput(e) {
@@ -22,18 +25,22 @@ export default class NewCarForm extends Component {
     this.setState({ [field]: target.value });
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    const { carName, make, model, modelYear } = this.state;
+    const { userID, toggleNewCarForm } = this.props;
+
+    axios
+      .post('api/cars', { userID, carName, make, model, modelYear })
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+
+    toggleNewCarForm();
+  }
+
   render() {
-    const { carName, make, model, year } = this.state;
+    const { carName, make, model, modelYear } = this.state;
     const { isCreating } = this.props;
-
-    const start = 1900;
-    // Adding plus one to year to account for next model year cars
-    const end = new Date().getFullYear() + 1;
-    let years = [];
-
-    for (let i = start; i <= end; i += 1) {
-      years = [...years, i];
-    }
 
     if (!isCreating) {
       return null;
@@ -54,14 +61,17 @@ export default class NewCarForm extends Component {
             Model:
             <input name="model" type="text" value={model} onChange={this.handleFormInput} />
           </label>
-          <label htmlFor="year">
-            Year:
-            <select name="year" value={year} onChange={this.handleFormInput}>
-              {years.map(yr => (
-                <option value={yr}>{yr}</option>
+          <label htmlFor="modelYear">
+            Model Year:
+            <select name="modelYear" value={modelYear} onChange={this.handleFormInput}>
+              {generateModelYears().map(year => (
+                <option value={year} key={year}>
+                  {year}
+                </option>
               ))}
             </select>
           </label>
+          <input type="submit" onClick={this.handleSubmit} />
         </form>
       </div>
     );
@@ -70,4 +80,6 @@ export default class NewCarForm extends Component {
 
 NewCarForm.propTypes = {
   isCreating: PropTypes.bool.isRequired,
+  userID: PropTypes.string.isRequired,
+  toggleNewCarForm: PropTypes.func.isRequired
 };
