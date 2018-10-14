@@ -6,7 +6,7 @@ const carSchema = new Schema({
   name: String,
   make: String,
   model: String,
-  year: Number
+  modelYear: Number
 });
 
 module.exports = carSchema;

@@ -1,6 +1,6 @@
 const Car = require('./models/carModel');
 
-exports.insertCar = ({ userID, carID, name, make, model, year }) =>
+exports.insertCar = ({ userID, carID, name, make, model, modelYear }) =>
   new Promise((res, rej) => {
     const document = new Car({
       userID,
@@ -8,7 +8,7 @@ exports.insertCar = ({ userID, carID, name, make, model, year }) =>
       name,
       make,
       model,
-      year
+      modelYear
     });
 
     document
