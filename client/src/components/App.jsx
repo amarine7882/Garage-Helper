@@ -7,32 +7,38 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      userId: '',
-      isCreating: false,
+      userID: '',
+      isCreating: false
     };
 
-    this.displayNewCarForm = this.displayNewCarForm.bind(this);
+    this.toggleNewCarForm = this.toggleNewCarForm.bind(this);
   }
 
   componentDidMount() {
-    const userId = prompt('User Name:');
+    const userID = prompt('email:');
 
-    this.setState({ userId });
+    this.setState({ userID });
   }
 
-  displayNewCarForm() {
-    this.setState({ isCreating: true });
+  toggleNewCarForm() {
+    const { isCreating } = this.state;
+
+    this.setState({ isCreating: !isCreating });
   }
 
   render() {
-    const { isCreating } = this.state;
+    const { isCreating, userID } = this.state;
 
     return (
       <div>
-        <button type="button" onClick={this.displayNewCarForm}>
+        <button type="button" onClick={this.toggleNewCarForm}>
           Create New Car
         </button>
-        <NewCarForm isCreating={isCreating} />
+        <NewCarForm
+          isCreating={isCreating}
+          userID={userID}
+          toggleNewCarForm={this.toggleNewCarForm}
+        />
       </div>
     );
   }
