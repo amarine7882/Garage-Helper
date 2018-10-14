@@ -1,4 +1,4 @@
-const generateYears = () => {
+const generateModelYears = () => {
   let years = [];
 
   // Adding plus one to year to account for next model year cars
@@ -12,4 +12,4 @@ const generateYears = () => {
   return years;
 };
 
-export default generateYears;
+export default generateModelYears;
