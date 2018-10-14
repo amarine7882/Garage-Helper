@@ -17,7 +17,7 @@ exports.insertCar = ({ userID, carID, name, make, model, year }) =>
       .catch(err => rej(err));
   });
 
-exports.getCar = ({ carID }) =>
+exports.getCar = carID =>
   Car.find({ carID })
     .then(document => document)
     .catch(err => err);

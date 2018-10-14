@@ -1,18 +1,23 @@
 const path = require('path');
 const compression = require('compression');
 const cors = require('cors');
+
 const moment = require('moment');
 const express = require('express');
-require('./database/index.js');
 
-const DIR_PATH = path.join(__dirname, '/../public');
+require('./database/index.js');
+const router = require('./routes.js');
+
 const PORT = 3000;
+const DIR_PATH = path.join(__dirname, '/../public');
 
 const server = express();
 
-server.use(express.static(DIR_PATH));
-
 server.use(compression());
 server.use(cors());
+
+server.use('/api', router);
+
+server.use(express.static(DIR_PATH));
 
 server.listen(PORT, () => console.log(`listening on port ${PORT} @ ${moment().format('h:mm:ss')}`));
