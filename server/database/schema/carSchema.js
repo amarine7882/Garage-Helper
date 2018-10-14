@@ -9,4 +9,4 @@ const carSchema = new Schema({
   year: Number
 });
 
-exports = carSchema;
+module.exports = carSchema;

@@ -5,8 +5,8 @@ const cors = require('cors');
 const moment = require('moment');
 const express = require('express');
 
-require('./database/index.js');
-const router = require('./routes.js');
+require('./database/index');
+const router = require('./routes');
 
 const PORT = 3000;
 const DIR_PATH = path.join(__dirname, '/../public');

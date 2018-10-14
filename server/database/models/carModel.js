@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-const carSchema = require('../schema/carSchema.js');
+
+const carSchema = require('../schema/carSchema');
 
 const Car = mongoose.model('Car', carSchema);
 
-exports = Car;
+module.exports = Car;
