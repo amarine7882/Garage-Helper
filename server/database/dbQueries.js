@@ -20,3 +20,9 @@ exports.getCar = carID =>
   Car.find({ carID })
     .then(document => document)
     .catch(err => err);
+
+exports.getCarListForUser = userID =>
+  Car.find({ userID })
+    .select('_id carName make model modelYear')
+    .then(docs => docs)
+    .catch(err => err);

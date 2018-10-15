@@ -12,5 +12,12 @@ module.exports = {
         .then(() => res.status(201).end())
         .catch(() => res.status(500).end());
     }
+  },
+  users: {
+    get: (req, res) => {
+      db.getCarListForUser(req.params.userID)
+        .then(docs => res.status(200).send(docs))
+        .catch(() => res.status(500).end());
+    }
   }
 };
