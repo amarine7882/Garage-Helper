@@ -17,7 +17,8 @@ exports.insertCar = ({ userID, carName, make, model, modelYear }) =>
   });
 
 exports.getCar = carID =>
-  Car.find({ carID })
+  Car.findById(carID)
+    .select('-_id -userID -__v')
     .then(document => document)
     .catch(err => err);
 
