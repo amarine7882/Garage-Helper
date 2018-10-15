@@ -32,10 +32,8 @@ export default class NewCarForm extends Component {
 
     axios
       .post('api/cars', { userID, carName, make, model, modelYear })
-      .then(res => console.log(res))
+      .then(() => toggleNewCarForm())
       .catch(err => console.log(err));
-
-    toggleNewCarForm();
   }
 
   render() {
