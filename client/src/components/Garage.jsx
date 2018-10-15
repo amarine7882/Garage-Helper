@@ -49,31 +49,32 @@ export default class Garage extends Component {
     const { isCreating, carList, displayedCar } = this.state;
     const { userID } = this.props;
 
-    let newCarForm;
+    let toggle;
     if (isCreating) {
-      newCarForm = <NewCarForm userID={userID} toggleNewCarForm={this.toggleNewCarForm} />;
+      toggle = <NewCarForm userID={userID} toggleNewCarForm={this.toggleNewCarForm} />;
+    } else {
+      toggle = (
+        <div>
+          <button type="button" onClick={this.toggleNewCarForm}>
+            Create New Car
+          </button>
+          <div>
+            Your Cars:
+            <select onChange={this.changeDisplayedCar} value={displayedCar}>
+              <option value="">select a car</option>
+              {carList.map(car => (
+                <option value={car._id} key={car._id}>
+                  {makeCarListValue(car)}
+                </option>
+              ))}
+            </select>
+          </div>
+          <Car displayedCar={displayedCar} userID={userID} />
+        </div>
+      );
     }
 
-    return (
-      <div>
-        <button type="button" onClick={this.toggleNewCarForm}>
-          Create New Car
-        </button>
-        <div>
-          Your Cars:
-          <select onChange={this.changeDisplayedCar} value={displayedCar}>
-            <option value="">select a car</option>
-            {carList.map(car => (
-              <option value={car._id} key={car._id}>
-                {makeCarListValue(car)}
-              </option>
-            ))}
-          </select>
-        </div>
-        <Car displayedCar={displayedCar} userID={userID} />
-        {newCarForm}
-      </div>
-    );
+    return <div>{toggle}</div>;
   }
 }
 

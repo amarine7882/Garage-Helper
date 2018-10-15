@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
+import AddServiceItem from './AddServiceItem';
+
 export default class ServiceItems extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      serviceItems: []
+      serviceItems: [],
+      isAdding: false
     };
 
     this.getServiceItems = this.getServiceItems.bind(this);
+    this.toggleAddServiceItem = this.toggleAddServiceItem.bind(this);
   }
 
   componentDidMount() {
@@ -30,13 +34,51 @@ export default class ServiceItems extends Component {
 
     axios
       .get(`/api/users/${userID}/cars/${displayedCar}/serviceItems`)
-      .then(({ data }) => this.setState({ serviceItems: data }))
+      .then(({ data }) => this.setState({ serviceItems: data.serviceItems }))
       .catch(err => console.log(err));
   }
 
+  toggleAddServiceItem() {
+    const { isAdding } = this.state;
+
+    this.setState({ isAdding: !isAdding });
+  }
+
   render() {
-    const { serviceItems } = this.state;
-    return <div>Service Items</div>;
+    const { serviceItems, isAdding } = this.state;
+    const { userID, displayedCar } = this.props;
+
+    let toggle;
+    if (isAdding) {
+      toggle = (
+        <AddServiceItem
+          userID={userID}
+          displayedCar={displayedCar}
+          toggleAddServiceItem={this.toggleAddServiceItem}
+          getServiceItems={this.getServiceItems}
+        />
+      );
+    } else {
+      toggle = (
+        <button type="button" onClick={this.toggleAddServiceItem}>
+          Add Service Item
+        </button>
+      );
+    }
+    return (
+      <div>
+        <div>
+          {serviceItems.map(item => (
+            <div key={item._id}>
+              <div>{item.serviceName}</div>
+              <div>{`Due every ${item.serviceInterval} months`}</div>
+              <div>Next Due</div>
+            </div>
+          ))}
+        </div>
+        {toggle}
+      </div>
+    );
   }
 }
 
