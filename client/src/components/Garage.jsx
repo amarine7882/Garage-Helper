@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
+import { makeCarListValue } from '../../utils/helpers';
+
 import NewCarForm from './NewCarForm';
 import Car from './Car';
 
@@ -11,17 +13,37 @@ export default class Garage extends Component {
 
     this.state = {
       isCreating: false,
-      carList: undefined,
-      displayedCar: undefined
+      carList: [],
+      displayedCar: false
     };
 
     this.toggleNewCarForm = this.toggleNewCarForm.bind(this);
+    this.getCarList = this.getCarList.bind(this);
+    this.changeDisplayedCar = this.changeDisplayedCar.bind(this);
+  }
+
+  componentDidMount() {
+    this.getCarList();
+  }
+
+  getCarList() {
+    const { userID } = this.props;
+
+    axios
+      .get(`api/users/${userID}/cars`)
+      .then(({ data }) => this.setState({ carList: data }))
+      .catch(err => console.log(err));
+  }
+
+  changeDisplayedCar(e) {
+    const { target } = e;
+    this.setState({ displayedCar: target.value });
   }
 
   toggleNewCarForm() {
     const { isCreating } = this.state;
 
-    this.setState({ isCreating: !isCreating });
+    this.setState({ isCreating: !isCreating }, () => this.getCarList());
   }
 
   render() {
@@ -40,10 +62,11 @@ export default class Garage extends Component {
         </button>
         <div>
           Your Cars:
-          <select>
+          <select onChange={this.changeDisplayedCar} value={displayedCar}>
+            <option value="">select a car</option>
             {carList.map(car => (
-              <option value={car.id} key={car.id}>
-                {car.name}
+              <option value={car._id} key={car._id}>
+                {makeCarListValue(car)}
               </option>
             ))}
           </select>
