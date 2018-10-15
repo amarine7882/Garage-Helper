@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-import { makeCarListValue } from '../../utils/helpers';
+import { makeCarListValue } from '../../helpers/helpers';
 
 import NewCarForm from './NewCarForm';
 import Car from './Car';
@@ -28,9 +28,8 @@ export default class Garage extends Component {
 
   getCarList() {
     const { userID } = this.props;
-
     axios
-      .get(`api/users/${userID}/cars`)
+      .get(`/api/users/${userID}/cars`)
       .then(({ data }) => this.setState({ carList: data }))
       .catch(err => console.log(err));
   }
@@ -71,7 +70,7 @@ export default class Garage extends Component {
             ))}
           </select>
         </div>
-        <Car displayedCar={displayedCar} />
+        <Car displayedCar={displayedCar} userID={userID} />
         {newCarForm}
       </div>
     );

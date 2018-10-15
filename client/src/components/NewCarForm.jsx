@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-import { generateModelYears } from '../../utils/helpers';
+import { generateModelYears } from '../../helpers/helpers';
 
 export default class NewCarForm extends Component {
   constructor(props) {
@@ -31,7 +31,7 @@ export default class NewCarForm extends Component {
     const { userID, toggleNewCarForm } = this.props;
 
     axios
-      .post('api/cars', { userID, carName, make, model, modelYear })
+      .post(`api/users/${userID}/cars`, { userID, carName, make, model, modelYear })
       .then(() => toggleNewCarForm())
       .catch(err => console.log(err));
   }

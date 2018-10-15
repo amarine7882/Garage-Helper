@@ -24,19 +24,19 @@ export default class Car extends Component {
   }
 
   getCarData() {
-    const { displayedCar } = this.props;
+    const { displayedCar, userID } = this.props;
 
     if (!displayedCar) return;
 
     axios
-      .get(`api/cars/${displayedCar}`)
+      .get(`api/users/${userID}/cars/${displayedCar}`)
       .then(({ data }) => this.setState({ carData: data }))
       .catch(err => console.log(err));
   }
 
   render() {
     const { carData } = this.state;
-    const { displayedCar } = this.props;
+    const { displayedCar, userID } = this.props;
 
     if (!displayedCar) return null;
     if (!carData) return <div>Loadng...</div>;
@@ -49,12 +49,13 @@ export default class Car extends Component {
         <div>{make}</div>
         <div>{model}</div>
         <div>{modelYear}</div>
-        <ServiceItems displayedCar={displayedCar} />
+        <ServiceItems displayedCar={displayedCar} userID={userID} />
       </div>
     );
   }
 }
 
 Car.propTypes = {
-  displayedCar: PropTypes.string.isRequired
+  displayedCar: PropTypes.string.isRequired,
+  userID: PropTypes.string.isRequired
 };
