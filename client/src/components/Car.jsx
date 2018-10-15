@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
+import ServiceItems from './ServiceItems';
+
 export default class Car extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +15,7 @@ export default class Car extends Component {
     this.getCarData = this.getCarData.bind(this);
   }
 
-  componentDidUpdate(prevState, prevProps) {
+  componentDidUpdate(prevProps) {
     const { displayedCar } = this.props;
 
     if (prevProps.displayedCar !== displayedCar) {
@@ -36,7 +38,8 @@ export default class Car extends Component {
     const { carData } = this.state;
     const { displayedCar } = this.props;
 
-    if (!displayedCar || !carData) return null;
+    if (!displayedCar) return null;
+    if (!carData) return <div>Loadng...</div>;
 
     const { carName, make, model, modelYear } = carData;
 
@@ -46,6 +49,7 @@ export default class Car extends Component {
         <div>{make}</div>
         <div>{model}</div>
         <div>{modelYear}</div>
+        <ServiceItems displayedCar={displayedCar} />
       </div>
     );
   }
