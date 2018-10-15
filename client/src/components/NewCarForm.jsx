@@ -40,11 +40,6 @@ export default class NewCarForm extends Component {
 
   render() {
     const { carName, make, model, modelYear } = this.state;
-    const { isCreating } = this.props;
-
-    if (!isCreating) {
-      return null;
-    }
 
     return (
       <div>
@@ -79,7 +74,6 @@ export default class NewCarForm extends Component {
 }
 
 NewCarForm.propTypes = {
-  isCreating: PropTypes.bool.isRequired,
   userID: PropTypes.string.isRequired,
   toggleNewCarForm: PropTypes.func.isRequired
 };
