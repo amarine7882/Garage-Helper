@@ -14,7 +14,7 @@ export default class Garage extends Component {
     this.state = {
       isCreating: false,
       carList: [],
-      displayedCar: false
+      displayedCar: ''
     };
 
     this.toggleNewCarForm = this.toggleNewCarForm.bind(this);
