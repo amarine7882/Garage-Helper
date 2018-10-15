@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-import generateModelYears from '../../utils/helpers';
+import { generateModelYears } from '../../utils/helpers';
 
 export default class NewCarForm extends Component {
   constructor(props) {
