@@ -1,22 +1,41 @@
-const db = require('../database/dbQueries');
+const { carQueries, serviceItemQueries } = require('../database/queries');
 
 module.exports = {
   cars: {
     get: (req, res) => {
-      db.getCar(req.params.carID)
+      carQueries
+        .getCar(req.params.carID)
         .then(car => res.status(200).send(car))
         .catch(() => res.status(500).end());
     },
     post: (req, res) => {
-      db.insertCar(req.body)
+      carQueries
+        .insertCar(req.body)
         .then(() => res.status(201).end())
         .catch(() => res.status(500).end());
     }
   },
   users: {
     get: (req, res) => {
-      db.getCarListForUser(req.params.userID)
+      carQueries
+        .getCarListForUser(req.params.userID)
         .then(docs => res.status(200).send(docs))
+        .catch(() => res.status(500).end());
+    }
+  },
+  serviceItems: {
+    get: (req, res) => {
+      serviceItemQueries
+        .getServiceItems(req.params.carID)
+        .then(serviceItems => res.status(200).send(serviceItems))
+        .catch(err => res.status(500).send(err));
+    },
+    post: (req, res) => {
+      const { serviceName, serviceInterval } = req.body;
+
+      serviceItemQueries
+        .addServiceItem(req.params.carID, serviceName, serviceInterval)
+        .then(() => res.status(201).end())
         .catch(() => res.status(500).end());
     }
   }
