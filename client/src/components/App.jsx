@@ -1,44 +1,27 @@
 import React, { Component } from 'react';
-import CarContainer from './CarContainer';
-import NewCarForm from './NewCarForm';
+
+import Garage from './Garage';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      userID: '',
-      isCreating: false
+      userID: ''
     };
-
-    this.toggleNewCarForm = this.toggleNewCarForm.bind(this);
   }
 
   componentDidMount() {
-    const userID = prompt('email:');
-
-    this.setState({ userID });
-  }
-
-  toggleNewCarForm() {
-    const { isCreating } = this.state;
-
-    this.setState({ isCreating: !isCreating });
+    // TODO: Update to prompt or login
+    this.setState({ userID: 'place.com' });
   }
 
   render() {
-    const { isCreating, userID } = this.state;
+    const { userID } = this.state;
 
     return (
       <div>
-        <button type="button" onClick={this.toggleNewCarForm}>
-          Create New Car
-        </button>
-        <NewCarForm
-          isCreating={isCreating}
-          userID={userID}
-          toggleNewCarForm={this.toggleNewCarForm}
-        />
+        <Garage userID={userID} />
       </div>
     );
   }
