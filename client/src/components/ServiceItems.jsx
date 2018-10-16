@@ -79,6 +79,7 @@ export default class ServiceItems extends Component {
     }
     return (
       <div>
+        {toggle}
         <div>
           {serviceItems.map(item => (
             <div key={item._id}>
@@ -96,7 +97,6 @@ export default class ServiceItems extends Component {
             </div>
           ))}
         </div>
-        {toggle}
       </div>
     );
   }
