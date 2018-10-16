@@ -1,11 +1,20 @@
 const moment = require('moment');
 const Car = require('../models/carModel');
 
+const { findClosestCompletionForDateOrMileage } = require('../../helpers/helpers');
+
 exports.getServiceItems = ({ carID }) =>
   Car.findOne({ _id: carID })
-    .select('serviceItems -_id')
+    .select('serviceItems mileage -_id')
     .then(data => {
-      data.serviceItems.sort((a, b) => moment(a.nextDue) > moment(b.nextDue));
+      const { mileage } = data;
+
+      data.serviceItems.sort((a, b) => {
+        return (
+          findClosestCompletionForDateOrMileage(a, mileage) <
+          findClosestCompletionForDateOrMileage(b, mileage)
+        );
+      });
       return data;
     })
     .catch(err => err);
@@ -62,7 +71,7 @@ exports.updateServiceItemCompleted = ({ itemID }, { mileage }) =>
 
 exports.deleteServiceItem = ({ carID, itemID }) =>
   new Promise((res, rej) => {
-    console.log(carID, itemID);
+    console.log('delete');
     const update = {
       $pull: {
         serviceItems: {
