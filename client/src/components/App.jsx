@@ -12,8 +12,9 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    // TODO: Update to prompt or login
-    this.setState({ userID: 'place.com' });
+    // const userID = prompt('Enter email:');
+    // TODO: add user login
+    // this.setState({ userID });
   }
 
   render() {
