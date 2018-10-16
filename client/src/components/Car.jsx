@@ -45,10 +45,18 @@ export default class Car extends Component {
 
     return (
       <div>
-        <div>{carName}</div>
-        <div>{make}</div>
-        <div>{model}</div>
-        <div>{modelYear}</div>
+        <div>
+          <h1>{carName}</h1>
+        </div>
+        <div>
+          <h2>{make}</h2>
+        </div>
+        <div>
+          <h2>{model}</h2>
+        </div>
+        <div>
+          <h3>{modelYear}</h3>
+        </div>
         <ServiceItems displayedCar={displayedCar} userID={userID} />
       </div>
     );
