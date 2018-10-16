@@ -20,6 +20,7 @@ export default class Garage extends Component {
     this.toggleNewCarForm = this.toggleNewCarForm.bind(this);
     this.getCarList = this.getCarList.bind(this);
     this.changeDisplayedCar = this.changeDisplayedCar.bind(this);
+    this.deleteCar = this.deleteCar.bind(this);
   }
 
   componentDidMount() {
@@ -37,6 +38,18 @@ export default class Garage extends Component {
   changeDisplayedCar(e) {
     const { target } = e;
     this.setState({ displayedCar: target.value });
+  }
+
+  deleteCar() {
+    const { userID, displayedCar } = this.state;
+
+    axios
+      .delete(`api/users/${userID}/cars/${displayedCar}`)
+      .then(() => {
+        this.setState({ displayedCar: '' });
+        this.getCarList();
+      })
+      .catch(err => console.log(err));
   }
 
   toggleNewCarForm() {
@@ -57,6 +70,9 @@ export default class Garage extends Component {
         <div>
           <button type="button" onClick={this.toggleNewCarForm}>
             Create New Car
+          </button>
+          <button type="button" onClick={this.deleteCar}>
+            Delete Car
           </button>
           <div>
             Your Cars:
