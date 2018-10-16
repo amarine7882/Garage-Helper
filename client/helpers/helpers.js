@@ -16,6 +16,7 @@ export const makeCarListValue = car => {
   if (car.carName) {
     return car.carName;
   }
-
   return `${car.modelYear} ${car.make} ${car.model}`;
 };
+
+export const numberWithCommas = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
