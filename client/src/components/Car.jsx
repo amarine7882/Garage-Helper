@@ -46,7 +46,7 @@ export default class Car extends Component {
 
     return (
       <div>
-        <h1>{carName}</h1>
+        <h3>{carName}</h3>
         <h3>{`${modelYear} ${make} ${model}`}</h3>
         <h3>{`Mileage: ${numberWithCommas(mileage)}`}</h3>
         <ServiceItems displayedCar={displayedCar} userID={userID} />
