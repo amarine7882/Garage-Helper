@@ -53,11 +53,11 @@ export default class ServiceItems extends Component {
   }
 
   completeServiceItem(e) {
-    const { displayedCar, userID } = this.props;
+    const { displayedCar, userID, mileage } = this.props;
     const { id } = e.target;
 
     axios
-      .patch(`/api/users/${userID}/cars/${displayedCar}/serviceItems/${id}`)
+      .patch(`/api/users/${userID}/cars/${displayedCar}/serviceItems/${id}`, { mileage })
       .then(this.getServiceItems)
       .catch(err => console.log(err));
   }
@@ -128,5 +128,6 @@ export default class ServiceItems extends Component {
 
 ServiceItems.propTypes = {
   displayedCar: PropTypes.string.isRequired,
-  userID: PropTypes.string.isRequired
+  userID: PropTypes.string.isRequired,
+  mileage: PropTypes.number.isRequired
 };
