@@ -71,6 +71,7 @@ export default class Car extends Component {
         <h3>{`Mileage: ${numberWithCommas(mileage)}`}</h3>
         <form>
           <label htmlFor="updateMileage">
+            Enter current mileage:
             <input
               name="updateMileage"
               type="number"
@@ -81,7 +82,7 @@ export default class Car extends Component {
           </label>
           <input type="submit" onClick={this.updateMileage} />
         </form>
-        <ServiceItems displayedCar={displayedCar} userID={userID} />
+        <ServiceItems displayedCar={displayedCar} userID={userID} mileage={mileage} />
       </div>
     );
   }
