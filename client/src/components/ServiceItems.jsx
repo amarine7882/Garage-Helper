@@ -17,6 +17,7 @@ export default class ServiceItems extends Component {
     this.getServiceItems = this.getServiceItems.bind(this);
     this.toggleAddServiceItem = this.toggleAddServiceItem.bind(this);
     this.completeServiceItem = this.completeServiceItem.bind(this);
+    this.deleteServiceItem = this.deleteServiceItem.bind(this);
   }
 
   componentDidMount() {
@@ -40,12 +41,22 @@ export default class ServiceItems extends Component {
       .catch(err => console.log(err));
   }
 
+  deleteServiceItem(e) {
+    const { displayedCar, userID } = this.props;
+    const { id } = e.target;
+
+    axios
+      .delete(`/api/users/${userID}/cars/${displayedCar}/serviceItems/${id}`)
+      .then(this.getServiceItems)
+      .catch(err => console.log(err));
+  }
+
   completeServiceItem(e) {
     const { displayedCar, userID } = this.props;
     const { id } = e.target;
 
     axios
-      .patch(`/api/users/${userID}/cars/${displayedCar}/serviceItems`, { id })
+      .patch(`/api/users/${userID}/cars/${displayedCar}/serviceItems/${id}`)
       .then(this.getServiceItems)
       .catch(err => console.log(err));
   }
@@ -93,6 +104,9 @@ export default class ServiceItems extends Component {
               <div>{`Last Completed: ${moment(item.lastCompleted).calendar()}`}</div>
               <button type="button" id={item._id} onClick={this.completeServiceItem}>
                 Complete
+              </button>
+              <button type="button" id={item._id} onClick={this.deleteServiceItem}>
+                Delete
               </button>
             </div>
           ))}
