@@ -10,7 +10,8 @@ const carSchema = new Schema({
   serviceItems: [
     {
       serviceName: String,
-      serviceInterval: Number,
+      serviceIntervalMonths: Number,
+      serviceIntervalMiles: Number,
       lastCompleted: Date,
       nextDue: Date
     }
