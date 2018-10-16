@@ -6,6 +6,7 @@ const carSchema = new Schema({
   make: String,
   model: String,
   modelYear: Number,
+  mileage: Number,
   serviceItems: [
     {
       serviceName: String,

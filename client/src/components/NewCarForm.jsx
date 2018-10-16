@@ -12,7 +12,8 @@ export default class NewCarForm extends Component {
       carName: '',
       make: '',
       model: '',
-      modelYear: 2000
+      modelYear: 2000,
+      mileage: 0
     };
 
     this.handleFormInput = this.handleFormInput.bind(this);
@@ -22,23 +23,28 @@ export default class NewCarForm extends Component {
   handleFormInput(e) {
     const { target } = e;
     const field = target.name;
+
     this.setState({ [field]: target.value });
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    const { carName, make, model, modelYear } = this.state;
+    const { carName, make, model, modelYear, mileage } = this.state;
     const { userID, toggleNewCarForm } = this.props;
 
+    if (make.length < 1 || model.length < 1 || mileage < 0) return;
+
     axios
-      .post(`api/users/${userID}/cars`, { userID, carName, make, model, modelYear })
+      .post(`api/users/${userID}/cars`, { userID, carName, make, model, modelYear, mileage })
       .then(() => toggleNewCarForm())
       .catch(err => console.log(err));
   }
 
   render() {
-    const { carName, make, model, modelYear } = this.state;
+    const { carName, make, model, modelYear, mileage } = this.state;
     const { toggleNewCarForm } = this.props;
+
+    const isEnabled = make.length > 0 && model.length > 0 && mileage >= 0;
 
     return (
       <div>
@@ -65,7 +71,17 @@ export default class NewCarForm extends Component {
               ))}
             </select>
           </label>
-          <input type="submit" onClick={this.handleSubmit} />
+          <label htmlFor="mileage">
+            Mileage:
+            <input
+              name="mileage"
+              type="Number"
+              value={mileage}
+              min="0"
+              onChange={this.handleFormInput}
+            />
+          </label>
+          <input type="submit" disabled={!isEnabled} onClick={this.handleSubmit} />
         </form>
         <button type="button" onClick={toggleNewCarForm}>
           Cancel
