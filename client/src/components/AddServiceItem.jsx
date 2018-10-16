@@ -8,7 +8,8 @@ export default class AddServiceItem extends Component {
 
     this.state = {
       serviceName: '',
-      serviceInterval: 0
+      serviceIntervalMonths: 0,
+      serviceIntervalMiles: 0
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,10 +25,13 @@ export default class AddServiceItem extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const { displayedCar, userID, getServiceItems, toggleAddServiceItem } = this.props;
-    const { serviceName, serviceInterval } = this.state;
+    const { serviceName, serviceIntervalMonths, serviceIntervalMiles } = this.state;
+
+    if (serviceName.length < 1 || (serviceIntervalMiles < 1 && serviceIntervalMonths < 1)) return;
 
     const serviceItem = {
-      serviceInterval,
+      serviceIntervalMonths,
+      serviceIntervalMiles,
       serviceName
     };
 
@@ -41,8 +45,11 @@ export default class AddServiceItem extends Component {
   }
 
   render() {
-    const { serviceName, serviceInterval } = this.state;
+    const { serviceName, serviceIntervalMonths, serviceIntervalMiles } = this.state;
     const { toggleAddServiceItem } = this.props;
+
+    const isEnabled =
+      serviceName.length > 0 && (serviceIntervalMonths > 0 || serviceIntervalMiles > 0);
 
     return (
       <div>
@@ -56,16 +63,27 @@ export default class AddServiceItem extends Component {
               onChange={this.handleFormInput}
             />
           </label>
-          <label htmlFor="serviceInterval">
-            Service Interval:
+          <label htmlFor="serviceIntervalMonths">
+            Service Interval by Months:
             <input
-              name="serviceInterval"
+              name="serviceIntervalMonths"
               type="number"
-              value={serviceInterval}
+              min="0"
+              value={serviceIntervalMonths}
               onChange={this.handleFormInput}
             />
           </label>
-          <input type="submit" onClick={this.handleSubmit} />
+          <label htmlFor="serviceIntervalMiles">
+            Service Interval by Miles:
+            <input
+              name="serviceIntervalMiles"
+              type="number"
+              min="0"
+              value={serviceIntervalMiles}
+              onChange={this.handleFormInput}
+            />
+          </label>
+          <input type="submit" disabled={!isEnabled} onClick={this.handleSubmit} />
         </form>
         <button type="button" onClick={toggleAddServiceItem}>
           Cancel
