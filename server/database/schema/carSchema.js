@@ -10,7 +10,8 @@ const carSchema = new Schema({
     {
       serviceName: String,
       serviceInterval: Number,
-      startDate: { type: Date, default: Date.now() }
+      lastCompleted: Date,
+      nextDue: Date
     }
   ]
 });
