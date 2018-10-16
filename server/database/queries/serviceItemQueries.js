@@ -60,12 +60,13 @@ exports.updateServiceItemCompleted = ({ itemID }, { mileage }) =>
       });
   });
 
-exports.deleteServiceItem = ({ carID, serviceItemID }) =>
+exports.deleteServiceItem = ({ carID, itemID }) =>
   new Promise((res, rej) => {
+    console.log(carID, itemID);
     const update = {
       $pull: {
         serviceItems: {
-          _id: serviceItemID
+          _id: itemID
         }
       }
     };
