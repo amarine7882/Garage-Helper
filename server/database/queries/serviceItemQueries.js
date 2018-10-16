@@ -1,7 +1,7 @@
 const moment = require('moment');
 const Car = require('../models/carModel');
 
-exports.getServiceItems = carID =>
+exports.getServiceItems = ({ carID }) =>
   Car.findOne({ _id: carID })
     .select('serviceItems -_id')
     .then(data => {
@@ -10,13 +10,17 @@ exports.getServiceItems = carID =>
     })
     .catch(err => err);
 
-exports.addServiceItem = (carID, serviceName, serviceInterval) =>
+exports.addServiceItem = (
+  { carID },
+  { serviceName, serviceIntervalMonths, serviceIntervalMiles }
+) =>
   new Promise((res, rej) => {
     const update = {
       $push: {
         serviceItems: {
           serviceName,
-          serviceInterval
+          serviceIntervalMonths,
+          serviceIntervalMiles
         }
       }
     };
@@ -26,7 +30,7 @@ exports.addServiceItem = (carID, serviceName, serviceInterval) =>
       .catch(err => rej(err));
   });
 
-exports.updateServiceItemCompleted = serviceItemID =>
+exports.updateServiceItemCompleted = ({ serviceItemID }) =>
   new Promise((res, rej) => {
     Car.findOne({ 'serviceItems._id': serviceItemID })
       .select('serviceItems.$.lastCompleted -_id')
@@ -48,7 +52,7 @@ exports.updateServiceItemCompleted = serviceItemID =>
       });
   });
 
-exports.deleteServiceItem = (carID, serviceItemID) =>
+exports.deleteServiceItem = ({ carID, serviceItemID }) =>
   new Promise((res, rej) => {
     const update = {
       $pull: {

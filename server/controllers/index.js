@@ -4,7 +4,7 @@ module.exports = {
   cars: {
     get: (req, res) => {
       carQueries
-        .getCar(req.params.carID)
+        .getCar(req.params)
         .then(car => res.status(200).send(car))
         .catch(() => res.status(500).end());
     },
@@ -16,13 +16,13 @@ module.exports = {
     },
     getList: (req, res) => {
       carQueries
-        .getCarListForUser(req.params.userID)
+        .getCarListForUser(req.params)
         .then(docs => res.status(200).send(docs))
         .catch(() => res.status(500).end());
     },
     delete: (req, res) => {
       carQueries
-        .deleteCar(req.params.carID)
+        .deleteCar(req.params)
         .then(() => res.status(204).end())
         .catch(() => res.status(500).end());
     }
@@ -31,27 +31,25 @@ module.exports = {
   serviceItems: {
     get: (req, res) => {
       serviceItemQueries
-        .getServiceItems(req.params.carID)
+        .getServiceItems(req.params)
         .then(serviceItems => res.status(200).send(serviceItems))
         .catch(err => res.status(500).send(err));
     },
     post: (req, res) => {
-      const { serviceName, serviceInterval } = req.body;
-
       serviceItemQueries
-        .addServiceItem(req.params.carID, serviceName, serviceInterval)
+        .addServiceItem(req.params, req.body)
         .then(() => res.status(201).end())
         .catch(() => res.status(500).end());
     },
     patch: (req, res) => {
       serviceItemQueries
-        .updateServiceItemCompleted(req.params.itemID)
+        .updateServiceItemCompleted(req.params)
         .then(() => res.status(204).end())
         .catch(() => res.status(500).end());
     },
     delete: (req, res) => {
       serviceItemQueries
-        .deleteServiceItem(req.params.carID, req.params.itemID)
+        .deleteServiceItem(req.params)
         .then(() => res.status(204).end())
         .catch(() => res.status(500).end());
     }

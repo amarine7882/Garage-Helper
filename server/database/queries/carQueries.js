@@ -18,19 +18,19 @@ exports.insertCar = ({ userID, carName, make, model, modelYear, mileage }) =>
       .catch(err => rej(err));
   });
 
-exports.getCar = carID =>
+exports.getCar = ({ carID }) =>
   Car.findById(carID)
     .select('-_id -userID -__v')
     .then(document => document)
     .catch(err => err);
 
-exports.getCarListForUser = userID =>
+exports.getCarListForUser = ({ userID }) =>
   Car.find({ userID })
     .select('_id carName make model modelYear')
     .then(docs => docs)
     .catch(err => err);
 
-exports.deleteCar = carID =>
+exports.deleteCar = ({ carID }) =>
   Car.findOneAndDelete({ _id: carID })
     .then(result => result)
     .catch(err => err);
