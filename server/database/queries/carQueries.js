@@ -28,3 +28,8 @@ exports.getCarListForUser = userID =>
     .select('_id carName make model modelYear')
     .then(docs => docs)
     .catch(err => err);
+
+exports.deleteCar = carID =>
+  Car.findOneAndDelete({ _id: carID })
+    .then(result => result)
+    .catch(err => err);

@@ -19,6 +19,12 @@ module.exports = {
         .getCarListForUser(req.params.userID)
         .then(docs => res.status(200).send(docs))
         .catch(() => res.status(500).end());
+    },
+    delete: (req, res) => {
+      carQueries
+        .deleteCar(req.params.carID)
+        .then(() => res.status(200).end())
+        .catch(() => res.status(500).end());
     }
   },
 
@@ -39,9 +45,17 @@ module.exports = {
     },
     patch: (req, res) => {
       serviceItemQueries
-        .updateServiceItemCompleted(req.body.id)
+        .updateServiceItemCompleted(req.params.itemID)
+        .then(() => res.status(201).end())
+        .catch(() => res.status(500).end());
+    },
+    delete: (req, res) => {
+      serviceItemQueries
+        .deleteServiceItem(req.params.carID, req.params.itemID)
         .then(() => res.status(201).end())
         .catch(() => res.status(500).end());
     }
   }
 };
+
+// TODO: Fix status codes for patch and delete

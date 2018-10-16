@@ -47,3 +47,18 @@ exports.updateServiceItemCompleted = serviceItemID =>
           .catch(err => rej(err));
       });
   });
+
+exports.deleteServiceItem = (carID, serviceItemID) =>
+  new Promise((res, rej) => {
+    const update = {
+      $pull: {
+        serviceItems: {
+          _id: serviceItemID
+        }
+      }
+    };
+
+    Car.findOneAndUpdate({ _id: carID }, update)
+      .then(result => res(result))
+      .catch(err => rej(err));
+  });
