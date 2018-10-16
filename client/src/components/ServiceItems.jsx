@@ -4,6 +4,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 import AddServiceItem from './AddServiceItem';
+import { displayIntervalsIfPresent } from '../../helpers/helpers';
 
 export default class ServiceItems extends Component {
   constructor(props) {
@@ -92,24 +93,33 @@ export default class ServiceItems extends Component {
       <div>
         {toggle}
         <div>
-          {serviceItems.map(item => (
-            <div key={item._id}>
-              <div>
-                <h2>{item.serviceName}</h2>
+          {serviceItems.map(
+            ({
+              _id,
+              serviceName,
+              lastCompleted,
+              nextDue,
+              serviceIntervalMonths,
+              serviceIntervalMiles
+            }) => (
+              <div key={_id}>
+                <div>
+                  <h2>{serviceName}</h2>
+                </div>
+                <div>
+                  <h3>{`Next Due: ${moment(nextDue).calendar()}`}</h3>
+                </div>
+                <div>{displayIntervalsIfPresent(serviceIntervalMonths, serviceIntervalMiles)}</div>
+                <div>{`Last Completed: ${moment(lastCompleted).calendar()}`}</div>
+                <button type="button" id={_id} onClick={this.completeServiceItem}>
+                  Complete
+                </button>
+                <button type="button" id={_id} onClick={this.deleteServiceItem}>
+                  Delete
+                </button>
               </div>
-              <div>
-                <h3>{`Next Due: ${moment(item.nextDue).calendar()}`}</h3>
-              </div>
-              <div>{`Due every ${item.serviceInterval} months`}</div>
-              <div>{`Last Completed: ${moment(item.lastCompleted).calendar()}`}</div>
-              <button type="button" id={item._id} onClick={this.completeServiceItem}>
-                Complete
-              </button>
-              <button type="button" id={item._id} onClick={this.deleteServiceItem}>
-                Delete
-              </button>
-            </div>
-          ))}
+            )
+          )}
         </div>
       </div>
     );
