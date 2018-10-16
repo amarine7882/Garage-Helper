@@ -30,23 +30,23 @@ exports.addServiceItem = (
       .catch(err => rej(err));
   });
 
-exports.updateServiceItemCompleted = ({ serviceItemID }) =>
+exports.updateServiceItemCompleted = ({ itemID }) =>
   new Promise((res, rej) => {
-    Car.findOne({ 'serviceItems._id': serviceItemID })
-      .select('serviceItems.$.lastCompleted -_id')
+    Car.findOne({ 'serviceItems._id': itemID })
+      .select('serviceItems.$.lastCompletedDate -_id')
       .then(doc => doc.serviceItems[0])
-      .then(({ lastCompleted, serviceInterval }) =>
-        moment(lastCompleted).add(serviceInterval, 'months')
+      .then(({ lastCompletedDate, serviceIntervalMonths }) =>
+        moment(lastCompletedDate).add(serviceIntervalMonths, 'months')
       )
       .then(dueDate => {
         const update = {
           $set: {
-            'serviceItems.$.lastCompleted': Date.now(),
-            'serviceItems.$.nextDue': dueDate
+            'serviceItems.$.lastCompletedDate': Date.now(),
+            'serviceItems.$.nextDueDate': dueDate
           }
         };
 
-        Car.findOneAndUpdate({ 'serviceItems._id': serviceItemID }, update, { upsert: true })
+        Car.findOneAndUpdate({ 'serviceItems._id': itemID }, update, { upsert: true })
           .then(result => res(result))
           .catch(err => rej(err));
       });

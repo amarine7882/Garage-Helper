@@ -12,8 +12,10 @@ const carSchema = new Schema({
       serviceName: String,
       serviceIntervalMonths: Number,
       serviceIntervalMiles: Number,
-      lastCompleted: Date,
-      nextDue: Date
+      lastCompletedDate: Date,
+      nextDueDate: Date,
+      lastCompletedMileage: Number,
+      nextDueMileage: Number
     }
   ]
 });

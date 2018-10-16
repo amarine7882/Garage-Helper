@@ -97,8 +97,8 @@ export default class ServiceItems extends Component {
             ({
               _id,
               serviceName,
-              lastCompleted,
-              nextDue,
+              lastCompletedDate,
+              nextDueDate,
               serviceIntervalMonths,
               serviceIntervalMiles
             }) => (
@@ -107,10 +107,10 @@ export default class ServiceItems extends Component {
                   <h2>{serviceName}</h2>
                 </div>
                 <div>
-                  <h3>{`Next Due: ${moment(nextDue).calendar()}`}</h3>
+                  <h3>{`Next Due: ${moment(nextDueDate).calendar()}`}</h3>
                 </div>
                 <div>{displayIntervalsIfPresent(serviceIntervalMonths, serviceIntervalMiles)}</div>
-                <div>{`Last Completed: ${moment(lastCompleted).calendar()}`}</div>
+                <div>{`Last Completed: ${moment(lastCompletedDate).calendar()}`}</div>
                 <button type="button" id={_id} onClick={this.completeServiceItem}>
                   Complete
                 </button>
