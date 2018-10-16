@@ -10,6 +10,8 @@ router.get('/users/:userID/cars/:carID', controller.cars.get);
 
 router.post('/users/:userID/cars', express.json(), controller.cars.post);
 
+router.patch('/users/:userID/cars/:carID', express.json(), controller.cars.patch);
+
 router.get('/users/:userID/cars', controller.cars.getList);
 
 router.delete('/users/:userID/cars/:carID', controller.cars.delete);

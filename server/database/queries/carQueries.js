@@ -19,10 +19,23 @@ exports.insertCar = ({ userID, carName, make, model, modelYear, mileage }) =>
   });
 
 exports.getCar = ({ carID }) =>
-  Car.findById(carID)
+  Car.findOne({ _id: carID })
     .select('-_id -userID -__v')
     .then(document => document)
     .catch(err => err);
+
+exports.updateMileage = ({ carID }, { updateMileage }) =>
+  new Promise((res, rej) => {
+    const update = {
+      $set: {
+        mileage: updateMileage
+      }
+    };
+
+    Car.findOneAndUpdate({ _id: carID }, update)
+      .then(result => res(result))
+      .catch(err => rej(err));
+  });
 
 exports.getCarListForUser = ({ userID }) =>
   Car.find({ userID })

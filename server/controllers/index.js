@@ -16,6 +16,13 @@ module.exports = {
         .catch(() => res.status(500).end());
     },
 
+    patch: (req, res) => {
+      carQueries
+        .updateMileage(req.params, req.body)
+        .then(() => res.status(204).end())
+        .catch(() => res.status(500).end());
+    },
+
     getList: (req, res) => {
       carQueries
         .getCarListForUser(req.params)
