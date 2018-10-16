@@ -20,3 +20,17 @@ export const makeCarListValue = car => {
 };
 
 export const numberWithCommas = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+export const displayIntervalsIfPresent = (serviceIntervalMonths, serviceIntervalMiles) => {
+  let intervalString = '';
+
+  if (serviceIntervalMonths > 0 && serviceIntervalMiles > 0) {
+    intervalString = `Due every ${serviceIntervalMonths} months or ${serviceIntervalMiles} miles`;
+  } else if (serviceIntervalMonths > 0) {
+    intervalString = `Due every ${serviceIntervalMonths} months`;
+  } else {
+    intervalString = `Due every ${serviceIntervalMiles} miles`;
+  }
+
+  return intervalString;
+};
