@@ -42,6 +42,7 @@ export default class AddServiceItem extends Component {
 
   render() {
     const { serviceName, serviceInterval } = this.state;
+    const { toggleAddServiceItem } = this.props;
 
     return (
       <div>
@@ -66,6 +67,9 @@ export default class AddServiceItem extends Component {
           </label>
           <input type="submit" onClick={this.handleSubmit} />
         </form>
+        <button type="button" onClick={toggleAddServiceItem}>
+          Cancel
+        </button>
       </div>
     );
   }

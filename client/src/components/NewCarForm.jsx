@@ -38,6 +38,7 @@ export default class NewCarForm extends Component {
 
   render() {
     const { carName, make, model, modelYear } = this.state;
+    const { toggleNewCarForm } = this.props;
 
     return (
       <div>
@@ -66,6 +67,9 @@ export default class NewCarForm extends Component {
           </label>
           <input type="submit" onClick={this.handleSubmit} />
         </form>
+        <button type="button" onClick={toggleNewCarForm}>
+          Cancel
+        </button>
       </div>
     );
   }
