@@ -26,7 +26,11 @@ router.post(
   controller.serviceItems.post
 );
 
-router.patch('/users/:userID/cars/:carID/serviceItems/:itemID', controller.serviceItems.patch);
+router.patch(
+  '/users/:userID/cars/:carID/serviceItems/:itemID',
+  express.json(),
+  controller.serviceItems.patch
+);
 
 router.delete('/users/:userID/cars/:carID/serviceItems/:itemID', controller.serviceItems.delete);
 

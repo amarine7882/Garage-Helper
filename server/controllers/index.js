@@ -55,7 +55,7 @@ module.exports = {
 
     patch: (req, res) => {
       serviceItemQueries
-        .updateServiceItemCompleted(req.params)
+        .updateServiceItemCompleted(req.params, req.body)
         .then(() => res.status(204).end())
         .catch(() => res.status(500).end());
     },
