@@ -4,7 +4,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 import AddServiceItem from './AddServiceItem';
-import { displayIntervalsIfPresent } from '../../helpers/helpers';
+import { displayIntervalsIfPresent, displayNextDueIfPresent } from '../../helpers/helpers';
 
 export default class ServiceItems extends Component {
   constructor(props) {
@@ -100,15 +100,22 @@ export default class ServiceItems extends Component {
               lastCompletedDate,
               lastCompletedMileage,
               nextDueDate,
+              nextDueMileage,
               serviceIntervalMonths,
               serviceIntervalMiles
             }) => (
               <div key={_id}>
                 <h3>{serviceName}</h3>
-                <h3>{`Next Due: ${moment(nextDueDate).calendar()}`}</h3>
+                <h3>{displayNextDueIfPresent(nextDueDate, nextDueMileage)}</h3>
                 <p>{displayIntervalsIfPresent(serviceIntervalMonths, serviceIntervalMiles)}</p>
-                <p>{`Last Completed on ${moment(lastCompletedDate).calendar()}`}</p>
-                <p>{`Mileage when last completed: ${lastCompletedMileage}`}</p>
+                <p>
+                  {`Last Completed on: ${
+                    lastCompletedDate ? moment(lastCompletedDate).calendar() : 'Not Completed Yet'
+                  }`}
+                </p>
+                <p>
+                  {`Mileage when last completed: ${lastCompletedMileage || 'Not completed yet'}`}
+                </p>
                 <button type="button" id={_id} onClick={this.completeServiceItem}>
                   Complete
                 </button>
