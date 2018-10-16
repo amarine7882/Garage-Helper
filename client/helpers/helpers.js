@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const generateModelYears = () => {
   let years = [];
 
@@ -33,4 +35,22 @@ export const displayIntervalsIfPresent = (serviceIntervalMonths, serviceInterval
   }
 
   return intervalString;
+};
+
+export const displayNextDueIfPresent = (nextDueDate, nextDueMiles) => {
+  let nextDueString = '';
+
+  if (nextDueMiles && nextDueDate) {
+    nextDueString = `Next Due on ${moment(nextDueDate).calendar()} or at ${numberWithCommas(
+      nextDueMiles
+    )} miles`;
+  } else if (!nextDueDate && !nextDueMiles) {
+    nextDueString = '';
+  } else if (!nextDueDate) {
+    nextDueString = `Next Due at ${nextDueMiles} miles`;
+  } else if (!nextDueMiles) {
+    nextDueString = `Next Due on ${moment(nextDueDate).calendar()}`;
+  }
+
+  return nextDueString;
 };
