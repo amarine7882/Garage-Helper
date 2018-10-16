@@ -36,6 +36,12 @@ module.exports = {
         .addServiceItem(req.params.carID, serviceName, serviceInterval)
         .then(() => res.status(201).end())
         .catch(() => res.status(500).end());
+    },
+    patch: (req, res) => {
+      serviceItemQueries
+        .updateServiceItemCompleted(req.body.id)
+        .then(() => res.status(201).end())
+        .catch(() => res.status(500).end());
     }
   }
 };

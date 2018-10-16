@@ -22,4 +22,10 @@ router.post(
   controller.serviceItems.post
 );
 
+router.patch(
+  '/users/:userID/cars/:carID/serviceItems',
+  express.json(),
+  controller.serviceItems.patch
+);
+
 module.exports = router;

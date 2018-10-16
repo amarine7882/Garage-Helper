@@ -1,9 +1,13 @@
+const moment = require('moment');
 const Car = require('../models/carModel');
 
 exports.getServiceItems = carID =>
-  Car.findById(carID)
+  Car.findOne({ _id: carID })
     .select('serviceItems -_id')
-    .then(serviceItems => serviceItems)
+    .then(data => {
+      data.serviceItems.sort((a, b) => moment(a.nextDue) > moment(b.nextDue));
+      return data;
+    })
     .catch(err => err);
 
 exports.addServiceItem = (carID, serviceName, serviceInterval) =>
@@ -17,7 +21,29 @@ exports.addServiceItem = (carID, serviceName, serviceInterval) =>
       }
     };
 
-    Car.findByIdAndUpdate(carID, update, { upsert: true })
+    Car.findOneAndUpdate({ _id: carID }, update, { upsert: true })
       .then(result => res(result))
       .catch(err => rej(err));
+  });
+
+exports.updateServiceItemCompleted = serviceItemID =>
+  new Promise((res, rej) => {
+    Car.findOne({ 'serviceItems._id': serviceItemID })
+      .select('serviceItems.$.lastCompleted -_id')
+      .then(doc => doc.serviceItems[0])
+      .then(({ lastCompleted, serviceInterval }) =>
+        moment(lastCompleted).add(serviceInterval, 'months')
+      )
+      .then(dueDate => {
+        const update = {
+          $set: {
+            'serviceItems.$.lastCompleted': Date.now(),
+            'serviceItems.$.nextDue': dueDate
+          }
+        };
+
+        Car.findOneAndUpdate({ 'serviceItems._id': serviceItemID }, update, { upsert: true })
+          .then(result => res(result))
+          .catch(err => rej(err));
+      });
   });
