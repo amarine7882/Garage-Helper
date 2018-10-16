@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import moment from 'moment';
 
 import AddServiceItem from './AddServiceItem';
 
@@ -15,6 +16,7 @@ export default class ServiceItems extends Component {
 
     this.getServiceItems = this.getServiceItems.bind(this);
     this.toggleAddServiceItem = this.toggleAddServiceItem.bind(this);
+    this.completeServiceItem = this.completeServiceItem.bind(this);
   }
 
   componentDidMount() {
@@ -35,6 +37,16 @@ export default class ServiceItems extends Component {
     axios
       .get(`/api/users/${userID}/cars/${displayedCar}/serviceItems`)
       .then(({ data }) => this.setState({ serviceItems: data.serviceItems }))
+      .catch(err => console.log(err));
+  }
+
+  completeServiceItem(e) {
+    const { displayedCar, userID } = this.props;
+    const { id } = e.target;
+
+    axios
+      .patch(`/api/users/${userID}/cars/${displayedCar}/serviceItems`, { id })
+      .then(this.getServiceItems)
       .catch(err => console.log(err));
   }
 
@@ -70,9 +82,17 @@ export default class ServiceItems extends Component {
         <div>
           {serviceItems.map(item => (
             <div key={item._id}>
-              <div>{item.serviceName}</div>
+              <div>
+                <h2>{item.serviceName}</h2>
+              </div>
+              <div>
+                <h3>{`Next Due: ${moment(item.nextDue).calendar()}`}</h3>
+              </div>
               <div>{`Due every ${item.serviceInterval} months`}</div>
-              <div>Next Due</div>
+              <div>{`Last Completed: ${moment(item.lastCompleted).calendar()}`}</div>
+              <button type="button" id={item._id} onClick={this.completeServiceItem}>
+                Complete
+              </button>
             </div>
           ))}
         </div>
