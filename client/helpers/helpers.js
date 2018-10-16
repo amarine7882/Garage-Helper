@@ -16,5 +16,6 @@ export const makeCarListValue = car => {
   if (car.carName) {
     return car.carName;
   }
+
   return `${car.modelYear} ${car.make} ${car.model}`;
 };
