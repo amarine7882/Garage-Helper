@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import ServiceItems from './ServiceItems';
+import { numberWithCommas } from '../../helpers/helpers';
 
 export default class Car extends Component {
   constructor(props) {
@@ -39,24 +40,15 @@ export default class Car extends Component {
     const { displayedCar, userID } = this.props;
 
     if (!displayedCar) return null;
-    if (!carData) return <div>Loadng...</div>;
+    if (!carData) return <div>Loading...</div>;
 
-    const { carName, make, model, modelYear } = carData;
+    const { carName, make, model, modelYear, mileage } = carData;
 
     return (
       <div>
-        <div>
-          <h1>{carName}</h1>
-        </div>
-        <div>
-          <h2>{make}</h2>
-        </div>
-        <div>
-          <h2>{model}</h2>
-        </div>
-        <div>
-          <h3>{modelYear}</h3>
-        </div>
+        <h1>{carName}</h1>
+        <h3>{`${modelYear} ${make} ${model}`}</h3>
+        <h3>{`Mileage: ${numberWithCommas(mileage)}`}</h3>
         <ServiceItems displayedCar={displayedCar} userID={userID} />
       </div>
     );
