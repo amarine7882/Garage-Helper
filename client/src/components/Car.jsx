@@ -10,10 +10,13 @@ export default class Car extends Component {
     super(props);
 
     this.state = {
+      updateMileage: 1,
       carData: undefined
     };
 
     this.getCarData = this.getCarData.bind(this);
+    this.handleFormInput = this.handleFormInput.bind(this);
+    this.updateMileage = this.updateMileage.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -31,12 +34,29 @@ export default class Car extends Component {
 
     axios
       .get(`api/users/${userID}/cars/${displayedCar}`)
-      .then(({ data }) => this.setState({ carData: data }))
+      .then(({ data }) => this.setState({ carData: data, updateMileage: data.mileage }))
+      .catch(err => console.log(err));
+  }
+
+  handleFormInput(e) {
+    const { target } = e;
+    const field = target.name;
+    this.setState({ [field]: target.value });
+  }
+
+  updateMileage(e) {
+    e.preventDefault();
+    const { updateMileage } = this.state;
+    const { userID, displayedCar } = this.props;
+
+    axios
+      .patch(`api/users/${userID}/cars/${displayedCar}`, { updateMileage })
+      .then(this.getCarData())
       .catch(err => console.log(err));
   }
 
   render() {
-    const { carData } = this.state;
+    const { carData, updateMileage } = this.state;
     const { displayedCar, userID } = this.props;
 
     if (!displayedCar) return null;
@@ -49,6 +69,18 @@ export default class Car extends Component {
         <h3>{carName}</h3>
         <h3>{`${modelYear} ${make} ${model}`}</h3>
         <h3>{`Mileage: ${numberWithCommas(mileage)}`}</h3>
+        <form>
+          <label htmlFor="updateMileage">
+            <input
+              name="updateMileage"
+              type="number"
+              min={mileage}
+              value={updateMileage}
+              onChange={this.handleFormInput}
+            />
+          </label>
+          <input type="submit" onClick={this.updateMileage} />
+        </form>
         <ServiceItems displayedCar={displayedCar} userID={userID} />
       </div>
     );
