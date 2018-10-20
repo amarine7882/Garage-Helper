@@ -42,16 +42,16 @@ export default class Garage extends Component {
     this.getCarList();
   }
 
-  changeDisplayedCar(e) {
-    const { value } = e.target;
-    this.setState({ displayedCar: value });
-  }
-
   async toggleNewCarForm() {
     const { isCreating } = this.state;
 
     await this.getCarList();
     this.setState({ isCreating: !isCreating });
+  }
+
+  changeDisplayedCar(e) {
+    const { value } = e.target;
+    this.setState({ displayedCar: value });
   }
 
   render() {
