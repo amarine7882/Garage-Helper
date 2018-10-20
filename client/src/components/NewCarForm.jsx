@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 
 import { generateModelYears } from '../../helpers/helpers';
+import { postNewCar } from '../../network/carRequests';
 
 export default class NewCarForm extends Component {
   constructor(props) {
@@ -27,17 +27,16 @@ export default class NewCarForm extends Component {
     this.setState({ [field]: target.value });
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault();
     const { carName, make, model, modelYear, mileage } = this.state;
     const { userID, toggleNewCarForm } = this.props;
+    const payload = { carName, make, model, modelYear, mileage };
 
     if (make.length < 1 || model.length < 1 || mileage < 0) return;
 
-    axios
-      .post(`api/users/${userID}/cars`, { userID, carName, make, model, modelYear, mileage })
-      .then(() => toggleNewCarForm())
-      .catch(err => console.log(err));
+    await postNewCar(userID, payload);
+    toggleNewCarForm();
   }
 
   render() {

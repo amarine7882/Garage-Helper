@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
-
-import { makeCarListValue } from '../../helpers/helpers';
 
 import NewCarForm from './NewCarForm';
 import Car from './Car';
+import CarSelector from './CarSelector';
+
+import { requestCarList, requestCarDelete } from '../../network/carRequests';
 
 export default class Garage extends Component {
   constructor(props) {
@@ -27,35 +27,31 @@ export default class Garage extends Component {
     this.getCarList();
   }
 
-  getCarList() {
+  async getCarList() {
     const { userID } = this.props;
-    axios
-      .get(`/api/users/${userID}/cars`)
-      .then(({ data }) => this.setState({ carList: data }))
-      .catch(err => console.log(err));
+    const carList = await requestCarList(userID);
+
+    this.setState({ carList });
+  }
+
+  async deleteCar() {
+    const { userID, displayedCar } = this.state;
+
+    await requestCarDelete(userID, displayedCar);
+    this.setState({ displayedCar: '' });
+    this.getCarList();
   }
 
   changeDisplayedCar(e) {
-    const { target } = e;
-    this.setState({ displayedCar: target.value });
+    const { value } = e.target;
+    this.setState({ displayedCar: value });
   }
 
-  deleteCar() {
-    const { userID, displayedCar } = this.state;
-
-    axios
-      .delete(`api/users/${userID}/cars/${displayedCar}`)
-      .then(() => {
-        this.setState({ displayedCar: '' });
-        this.getCarList();
-      })
-      .catch(err => console.log(err));
-  }
-
-  toggleNewCarForm() {
+  async toggleNewCarForm() {
     const { isCreating } = this.state;
 
-    this.setState({ isCreating: !isCreating }, () => this.getCarList());
+    await this.getCarList();
+    this.setState({ isCreating: !isCreating });
   }
 
   render() {
@@ -74,17 +70,11 @@ export default class Garage extends Component {
           <button type="button" onClick={this.deleteCar}>
             Delete Car
           </button>
-          <div>
-            Your Cars:
-            <select onChange={this.changeDisplayedCar} value={displayedCar}>
-              <option value="">select a car</option>
-              {carList.map(car => (
-                <option value={car._id} key={car._id}>
-                  {makeCarListValue(car)}
-                </option>
-              ))}
-            </select>
-          </div>
+          <CarSelector
+            carList={carList}
+            displayedCar={displayedCar}
+            changeDisplayedCar={this.changeDisplayedCar}
+          />
           <Car displayedCar={displayedCar} userID={userID} />
         </div>
       );

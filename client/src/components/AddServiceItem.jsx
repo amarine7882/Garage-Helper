@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+
+import { postServiceItem } from '../../network/serviceItemRequests';
 
 export default class AddServiceItem extends Component {
   constructor(props) {
@@ -17,31 +18,28 @@ export default class AddServiceItem extends Component {
   }
 
   handleFormInput(e) {
-    const { target } = e;
-    const field = target.name;
-    this.setState({ [field]: target.value });
+    const { name, value } = e.target;
+
+    this.setState({ [name]: value });
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault();
     const { displayedCar, userID, getServiceItems, toggleAddServiceItem } = this.props;
     const { serviceName, serviceIntervalMonths, serviceIntervalMiles } = this.state;
 
     if (serviceName.length < 1 || (serviceIntervalMiles < 1 && serviceIntervalMonths < 1)) return;
 
-    const serviceItem = {
+    const payload = {
       serviceIntervalMonths,
       serviceIntervalMiles,
       serviceName
     };
 
-    axios
-      .post(`/api/users/${userID}/cars/${displayedCar}/serviceItems`, serviceItem)
-      .then(() => {
-        getServiceItems();
-        toggleAddServiceItem();
-      })
-      .catch(err => console.log(err));
+    await postServiceItem(userID, displayedCar, payload);
+
+    getServiceItems();
+    toggleAddServiceItem();
   }
 
   render() {

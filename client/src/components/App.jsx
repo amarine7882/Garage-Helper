@@ -11,12 +11,6 @@ export default class App extends Component {
     };
   }
 
-  componentDidMount() {
-    // const userID = prompt('Enter email:');
-    // TODO: add user login
-    // this.setState({ userID });
-  }
-
   render() {
     const { userID } = this.state;
 
