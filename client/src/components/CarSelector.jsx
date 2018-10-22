@@ -1,29 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Dropdown } from 'semantic-ui-react';
 
 import { makeCarListValue } from '../../helpers/helpers';
 
-const CarSelector = ({ changeDisplayedCar, carList, displayedCar }) => (
-  <div>
-    Your Cars:
-    <select onChange={changeDisplayedCar} value={displayedCar}>
-      <option value="">select a car</option>
+const CarSelector = ({ changeDisplayedCar, carList }) => (
+  <Dropdown item text="Your Cars">
+    <Dropdown.Menu>
+      <Dropdown.Header>Select a Car</Dropdown.Header>
       {carList.map(car => {
         const { _id } = car;
         return (
-          <option value={_id} key={_id}>
+          <Dropdown.Item name={_id} key={_id} onClick={changeDisplayedCar}>
             {makeCarListValue(car)}
-          </option>
+          </Dropdown.Item>
         );
       })}
-    </select>
-  </div>
+    </Dropdown.Menu>
+  </Dropdown>
 );
 
 CarSelector.propTypes = {
   changeDisplayedCar: PropTypes.func.isRequired,
-  carList: PropTypes.arrayOf(PropTypes.string).isRequired,
-  displayedCar: PropTypes.string.isRequired
+  carList: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default CarSelector;
