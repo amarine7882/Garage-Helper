@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Menu } from 'semantic-ui-react';
 
 import NewCarForm from './NewCarForm';
 import Car from './Car';
@@ -49,9 +50,8 @@ export default class Garage extends Component {
     this.setState({ isCreating: !isCreating });
   }
 
-  changeDisplayedCar(e) {
-    const { value } = e.target;
-    this.setState({ displayedCar: value });
+  changeDisplayedCar(e, { name }) {
+    this.setState({ displayedCar: name });
   }
 
   render() {
@@ -62,25 +62,18 @@ export default class Garage extends Component {
     if (isCreating) {
       toggle = <NewCarForm userID={userID} toggleNewCarForm={this.toggleNewCarForm} />;
     } else {
-      toggle = (
-        <div>
-          <button type="button" onClick={this.toggleNewCarForm}>
-            Create New Car
-          </button>
-          <button type="button" onClick={this.deleteCar}>
-            Delete Car
-          </button>
-          <CarSelector
-            carList={carList}
-            displayedCar={displayedCar}
-            changeDisplayedCar={this.changeDisplayedCar}
-          />
-          <Car displayedCar={displayedCar} userID={userID} />
-        </div>
-      );
+      toggle = <Car displayedCar={displayedCar} userID={userID} deleteCar={this.deleteCar} />;
     }
 
-    return <div>{toggle}</div>;
+    return (
+      <div>
+        <Menu secondary vertical>
+          <Menu.Item name="create new car" onClick={this.toggleNewCarForm} active={isCreating} />
+          <CarSelector carList={carList} changeDisplayedCar={this.changeDisplayedCar} />
+        </Menu>
+        {toggle}
+      </div>
+    );
   }
 }
 

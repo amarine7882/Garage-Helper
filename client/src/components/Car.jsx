@@ -37,7 +37,7 @@ export default class Car extends Component {
 
   render() {
     const { carData } = this.state;
-    const { displayedCar, userID } = this.props;
+    const { displayedCar, userID, deleteCar } = this.props;
 
     if (!displayedCar) return null;
     if (!carData) return <div>Loading...</div>;
@@ -46,6 +46,9 @@ export default class Car extends Component {
 
     return (
       <div>
+        <button type="button" onClick={deleteCar}>
+          Delete Car
+        </button>
         <h3>{carName}</h3>
         <h3>{`${modelYear} ${make} ${model}`}</h3>
         <h3>{`Mileage: ${numberWithCommas(mileage)}`}</h3>
@@ -57,6 +60,7 @@ export default class Car extends Component {
 }
 
 Car.propTypes = {
+  deleteCar: PropTypes.func.isRequired,
   displayedCar: PropTypes.string.isRequired,
   userID: PropTypes.string.isRequired
 };
