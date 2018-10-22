@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { hot } from 'react-hot-loader';
 
 import Garage from './Garage';
+import Nav from './Nav';
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
 
@@ -16,8 +18,11 @@ export default class App extends Component {
 
     return (
       <div>
+        <Nav />
         <Garage userID={userID} />
       </div>
     );
   }
 }
+
+export default hot(module)(App);
