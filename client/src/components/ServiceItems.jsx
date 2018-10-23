@@ -40,7 +40,7 @@ const ServiceItems = ({ serviceItems, completeServiceItem, deleteServiceItem }) 
 );
 
 ServiceItems.propTypes = {
-  serviceItems: PropTypes.objectOf(PropTypes.string).isRequired,
+  serviceItems: PropTypes.arrayOf(PropTypes.object).isRequired,
   completeServiceItem: PropTypes.func.isRequired,
   deleteServiceItem: PropTypes.func.isRequired
 };

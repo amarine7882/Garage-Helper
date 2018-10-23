@@ -50,8 +50,8 @@ export default class Garage extends Component {
     this.setState({ isCreating: !isCreating });
   }
 
-  changeDisplayedCar(e, { name }) {
-    this.setState({ displayedCar: name });
+  changeDisplayedCar(e, { value }) {
+    this.setState({ displayedCar: value });
   }
 
   render() {
@@ -60,7 +60,7 @@ export default class Garage extends Component {
 
     let toggle;
     if (isCreating) {
-      toggle = <NewCarForm userID={userID} toggleNewCarForm={this.toggleNewCarForm} />;
+      toggle = <NewCarForm userID={userID} getCarList={this.getCarList} />;
     } else {
       toggle = <Car displayedCar={displayedCar} userID={userID} deleteCar={this.deleteCar} />;
     }

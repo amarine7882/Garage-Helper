@@ -11,7 +11,7 @@ const CarSelector = ({ changeDisplayedCar, carList }) => (
       {carList.map(car => {
         const { _id } = car;
         return (
-          <Dropdown.Item name={_id} key={_id} onClick={changeDisplayedCar}>
+          <Dropdown.Item value={_id} key={_id} onClick={changeDisplayedCar}>
             {makeCarListValue(car)}
           </Dropdown.Item>
         );
