@@ -18,6 +18,6 @@ server.use(cors());
 
 server.use('/api', router);
 
-server.use(express.static(DIR_PATH));
+server.use('/', express.static(DIR_PATH));
 
 server.listen(PORT, () => console.log(`listening on port ${PORT} @ ${moment().format('h:mm:ss')}`));

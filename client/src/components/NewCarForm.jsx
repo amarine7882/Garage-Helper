@@ -18,11 +18,18 @@ export default class NewCarForm extends Component {
       mileage: 0,
       isSubmited: false,
       isWarning: false,
-      isPosting: false
+      isPosting: false,
+      options: []
     };
 
     this.handleFormInput = this.handleFormInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    const options = generateModelYears().map(year => ({ key: year, text: year, value: year }));
+
+    this.setState({ options });
   }
 
   handleFormInput(e, { value, name }) {
@@ -64,9 +71,9 @@ export default class NewCarForm extends Component {
       modelYear,
       isSubmited,
       isWarning,
-      isPosting
+      isPosting,
+      options
     } = this.state;
-    const options = generateModelYears().map(year => ({ key: year, text: year, value: year }));
 
     return (
       <div>
