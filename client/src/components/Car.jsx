@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Segment, Icon, Loader, Header } from 'semantic-ui-react';
 
 import ServiceItemsContainer from './ServiceItemsContainer';
 import UpdateMileage from './UpdateMileage';
@@ -40,20 +41,33 @@ export default class Car extends Component {
     const { displayedCar, userID, deleteCar } = this.props;
 
     if (!displayedCar) return null;
-    if (!carData) return <div>Loading...</div>;
+    if (!carData) return <Loader active inline="centered" size="massive" />;
 
     const { carName, make, model, modelYear, mileage } = carData;
 
     return (
-      <div>
-        <button type="button" onClick={deleteCar}>
-          Delete Car
-        </button>
-        <h3>{carName}</h3>
-        <h3>{`${modelYear} ${make} ${model}`}</h3>
-        <h3>{`Mileage: ${numberWithCommas(mileage)}`}</h3>
-        <UpdateMileage userID={userID} displayedCar={displayedCar} getCarData={this.getCarData} />
-        <ServiceItemsContainer displayedCar={displayedCar} userID={userID} mileage={mileage} />
+      <div className="ui container">
+        <Segment.Group>
+          <Segment />
+          <Icon onClick={deleteCar} name="trash" />
+          <Segment.Group>
+            <Segment>
+              <Header>{carName}</Header>
+              <Header>{`${modelYear} ${make} ${model}`}</Header>
+              <Header>{`Mileage: ${numberWithCommas(mileage)}`}</Header>
+            </Segment>
+          </Segment.Group>
+          <Segment>
+            <UpdateMileage
+              userID={userID}
+              displayedCar={displayedCar}
+              getCarData={this.getCarData}
+            />
+          </Segment>
+          <Segment>
+            <ServiceItemsContainer displayedCar={displayedCar} userID={userID} mileage={mileage} />
+          </Segment>
+        </Segment.Group>
       </div>
     );
   }
