@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Form, Message } from 'semantic-ui-react';
 
-import { generateModelYears } from '../../helpers/helpers';
 import { postNewCar } from '../../network/carRequests';
 
 export default class NewCarForm extends Component {
@@ -18,18 +17,11 @@ export default class NewCarForm extends Component {
       mileage: 0,
       isSubmited: false,
       isWarning: false,
-      isPosting: false,
-      options: []
+      isPosting: false
     };
 
     this.handleFormInput = this.handleFormInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentDidMount() {
-    const options = generateModelYears().map(year => ({ key: year, text: year, value: year }));
-
-    this.setState({ options });
   }
 
   handleFormInput(e, { value, name }) {
@@ -41,10 +33,6 @@ export default class NewCarForm extends Component {
     const { carName, make, model, modelYear, mileage } = this.state;
     const { userID, getCarList } = this.props;
 
-    if (make.length < 1 || model.length < 1 || mileage < 0) {
-      this.setState({ isWarning: true });
-      return;
-    }
     this.setState({ isPosting: true });
     const payload = { carName, make, model, modelYear, mileage };
 
@@ -71,25 +59,29 @@ export default class NewCarForm extends Component {
       modelYear,
       isSubmited,
       isWarning,
-      isPosting,
-      options
+      isPosting
     } = this.state;
 
     return (
-      <div>
-        <Form success={isSubmited} warning={isWarning} loading={isPosting}>
+      <div className="ui container">
+        <Form
+          success={isSubmited}
+          warning={isWarning}
+          loading={isPosting}
+          onSubmit={this.handleSubmit}
+        >
           <Form.Input
             fluid
             type="text"
             label="Car Name"
             name="carName"
             value={carName}
-            placeholder="Optional"
             onChange={this.handleFormInput}
           />
           <Form.Group widths="equal">
             <Form.Input
               fluid
+              required
               type="text"
               label="Make"
               name="make"
@@ -98,37 +90,34 @@ export default class NewCarForm extends Component {
             />
             <Form.Input
               fluid
+              required
               type="text"
               label="Model"
               name="model"
               value={model}
               onChange={this.handleFormInput}
             />
-            <Form.Select
+            <Form.Input
               fluid
+              required
+              type="number"
               label="Model Year"
               name="modelYear"
-              options={options}
               value={modelYear}
               onChange={this.handleFormInput}
             />
           </Form.Group>
           <Form.Input
             fluid
+            required
             type="number"
             name="mileage"
             label="Mileage"
             value={mileage}
-            min="0"
             onChange={this.handleFormInput}
           />
           <Message success header="Car Created" content="You can now find it in your garage" />
-          <Message
-            warning
-            header="Missing Fields"
-            content="please fill make, model and mileage before submitting"
-          />
-          <Form.Button content="Submit" type="submit" onClick={this.handleSubmit} />
+          <Form.Button content="Submit" type="submit" />
         </Form>
       </div>
     );
