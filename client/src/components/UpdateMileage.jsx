@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Form } from 'semantic-ui-react';
 
 import { patchCarMileage } from '../../network/carRequests';
 
@@ -15,9 +16,7 @@ export default class UpdateMileage extends Component {
     this.updateMileage = this.updateMileage.bind(this);
   }
 
-  handleFormInput(e) {
-    const { value } = e.target;
-
+  handleFormInput(e, { value }) {
     this.setState({ updateMileage: value });
   }
 
@@ -34,18 +33,16 @@ export default class UpdateMileage extends Component {
     const { updateMileage } = this.state;
 
     return (
-      <form>
-        <label htmlFor="updateMileage">
-          Enter current mileage:
-          <input
-            name="updateMileage"
-            type="number"
-            value={updateMileage}
-            onChange={this.handleFormInput}
-          />
-        </label>
-        <input type="submit" onClick={this.updateMileage} />
-      </form>
+      <Form onSubmit={this.updateMileage}>
+        <Form.Input
+          type="number"
+          name="updateMileage"
+          label="Update Mileage"
+          value={updateMileage}
+          onChange={this.handleFormInput}
+        />
+        <Form.Button content="Update" type="submit" />
+      </Form>
     );
   }
 }
