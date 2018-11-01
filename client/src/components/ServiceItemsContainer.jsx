@@ -41,17 +41,15 @@ export default class ServiceItemsContainer extends Component {
     this.setState({ serviceItems });
   }
 
-  async deleteServiceItem({ target }) {
+  async deleteServiceItem(id) {
     const { displayedCar, userID } = this.props;
-    const { id } = target;
 
     await requestDeleteServiceItem(userID, displayedCar, id);
     this.getServiceItems();
   }
 
-  async completeServiceItem({ target }) {
+  async completeServiceItem(id) {
     const { displayedCar, userID, mileage } = this.props;
-    const { id } = target;
 
     await patchServiceItem(userID, displayedCar, id, mileage);
     this.getServiceItems();

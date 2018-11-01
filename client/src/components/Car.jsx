@@ -55,10 +55,11 @@ export default class Car extends Component {
     const { carData, isUpdating, isAdding } = this.state;
     const { displayedCar, userID, deleteCar } = this.props;
 
-    let mileageToggle;
-    let serviceItemsToggle;
     if (!displayedCar) return null;
     if (!carData) return <Icon type="loading" theme="outlined" style={{ fontSize: '80px' }} />;
+    const { carName, make, model, modelYear, mileage } = carData;
+
+    let mileageToggle;
     if (isUpdating) {
       mileageToggle = (
         <UpdateMileage
@@ -70,7 +71,7 @@ export default class Car extends Component {
       );
     }
 
-    const { carName, make, model, modelYear, mileage } = carData;
+    let serviceItemsToggle;
     if (isAdding) {
       serviceItemsToggle = (
         <AddServiceItem
@@ -88,7 +89,7 @@ export default class Car extends Component {
     return (
       <Card>
         <Card
-          style={{ width: 400 }}
+          style={{ width: 600, marginBottom: 30 }}
           actions={[
             <Icon
               type="plus"
@@ -105,9 +106,9 @@ export default class Car extends Component {
             <Icon type="delete" theme="outlined" onClick={deleteCar} style={{ fontSize: '24px' }} />
           ]}
         >
-          <div>{carName}</div>
-          <div>{`${modelYear} ${make} ${model}`}</div>
-          <div>{`Mileage: ${numberWithCommas(mileage)}`}</div>
+          <h3>{carName}</h3>
+          <h2>{`${modelYear} ${make} ${model}`}</h2>
+          <p>{`Mileage: ${numberWithCommas(mileage)}`}</p>
         </Card>
         {mileageToggle}
         {serviceItemsToggle}

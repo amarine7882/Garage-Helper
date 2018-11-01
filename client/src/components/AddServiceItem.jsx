@@ -35,13 +35,12 @@ export default class AddServiceItem extends Component {
       serviceName
     };
 
-    toggleAddServiceItem();
     await postServiceItem(userID, displayedCar, payload);
+    toggleAddServiceItem();
   }
 
   render() {
     const { serviceName, serviceIntervalMonths, serviceIntervalMiles } = this.state;
-    const { toggleAddServiceItem } = this.props;
 
     const isEnabled =
       serviceName.length > 0 && (serviceIntervalMonths > 0 || serviceIntervalMiles > 0);
@@ -80,9 +79,6 @@ export default class AddServiceItem extends Component {
           </label>
           <input type="submit" disabled={!isEnabled} onClick={this.handleSubmit} />
         </form>
-        <button type="button" onClick={toggleAddServiceItem}>
-          Cancel
-        </button>
       </div>
     );
   }
