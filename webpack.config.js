@@ -26,9 +26,9 @@ module.exports = {
           presets: ['@babel/react', '@babel/preset-env'],
           cacheDirectory: true,
           plugins: [
-            'babel-plugin-styled-components',
             '@babel/plugin-transform-async-to-generator',
-            'react-hot-loader/babel'
+            'react-hot-loader/babel',
+            ['import', { libraryName: 'antd', libraryDirectory: 'es', style: 'css' }]
           ]
         }
       },
