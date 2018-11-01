@@ -46,10 +46,8 @@ export default class Garage extends Component {
     this.getCarList();
   }
 
-  async toggleNewCarForm() {
+  toggleNewCarForm() {
     const { isCreating } = this.state;
-
-    await this.getCarList();
     this.setState({ isCreating: !isCreating });
   }
 
@@ -63,7 +61,13 @@ export default class Garage extends Component {
 
     let toggle;
     if (isCreating) {
-      toggle = <NewCarForm userID={userID} getCarList={this.getCarList} />;
+      toggle = (
+        <NewCarForm
+          userID={userID}
+          getCarList={this.getCarList}
+          toggleNewCarForm={this.toggleNewCarForm}
+        />
+      );
     } else {
       toggle = <Car displayedCar={displayedCar} userID={userID} deleteCar={this.deleteCar} />;
     }

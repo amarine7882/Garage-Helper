@@ -1,73 +1,69 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Form, Input, InputNumber, Button } from 'antd';
+import { Form, Input, InputNumber, Button, Select } from 'antd';
 
 import { postNewCar } from '../../network/carRequests';
+import { generateModelYears } from '../../helpers/helpers';
 
-export default class NewCarForm extends Component {
+class NewCarFormTemplate extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      carName: '',
-      make: '',
-      model: '',
-      modelYear: moment().year(),
-      mileage: 0
-    };
+    this.years = generateModelYears();
 
-    this.handleFormInput = this.handleFormInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleFormInput({ target }) {
-    const { value, name } = target;
-    this.setState({ [name]: value });
-  }
-
-  async handleSubmit(e) {
+  handleSubmit(e) {
     e.preventDefault();
-    const { carName, make, model, modelYear, mileage } = this.state;
-    const { userID, getCarList } = this.props;
+    const { userID, getCarList, toggleNewCarForm, form } = this.props;
 
-    const payload = { carName, make, model, modelYear, mileage };
-
-    await postNewCar(userID, payload);
-    this.setState({
-      carName: '',
-      make: '',
-      model: '',
-      modelYear: moment().year(),
-      mileage: 0
+    form.validateFields(async (err, values) => {
+      if (!err) {
+        await postNewCar(userID, values);
+        getCarList();
+        toggleNewCarForm();
+      }
     });
-    getCarList();
   }
 
   render() {
-    const { carName, make, model, mileage, modelYear } = this.state;
-
+    const { form } = this.props;
+    const { getFieldDecorator } = form;
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.handleSubmit} style={{ width: 500, marginLeft: '25%' }}>
         <Form.Item label="Car Name">
-          <Input
-            name="carName"
-            value={carName}
-            onChange={this.handleFormInput}
-            placeholder="car name"
-          />
+          {getFieldDecorator('carName')(<Input placeholder="Car Name" />)}
         </Form.Item>
         <Form.Item label="Make" required>
-          <Input name="make" value={make} onChange={this.handleFormInput} placeholder="make" />
+          {getFieldDecorator('make', {
+            rules: [{ required: true, message: "Please input your car's make" }]
+          })(<Input placeholder="Make" />)}
         </Form.Item>
         <Form.Item label="Model" required>
-          <Input name="model" value={model} onChange={this.handleFormInput} placeholder="model" />
+          {getFieldDecorator('model', {
+            rules: [{ required: true, message: "Please input your car's model" }]
+          })(<Input placeholder="Model" />)}
         </Form.Item>
         <Form.Item label="Model Year" required>
-          <InputNumber name="modelYear" value={modelYear} onChange={this.handleFormInput} />
+          {getFieldDecorator('modelYear', {
+            initialValue: moment().year()
+          })(
+            <Select>
+              {this.years.map(year => (
+                <Select.Option key={year} value={year}>
+                  {year}
+                </Select.Option>
+              ))}
+            </Select>
+          )}
         </Form.Item>
         <Form.Item label="Mileage" required>
-          <InputNumber name="mileage" value={mileage} onChange={this.handleFormInput} />
+          {getFieldDecorator('mileage', {
+            initialValue: 0,
+            rules: [{ required: true, message: "Please input your car's mileage" }]
+          })(<InputNumber name="mileage" min={0} style={{ width: 300 }} />)}
         </Form.Item>
         <Button htmlType="submit">Submit</Button>
       </Form>
@@ -75,7 +71,13 @@ export default class NewCarForm extends Component {
   }
 }
 
-NewCarForm.propTypes = {
+const NewCarForm = Form.create()(NewCarFormTemplate);
+
+export default NewCarForm;
+
+NewCarFormTemplate.propTypes = {
+  form: PropTypes.instanceOf(Object).isRequired,
   userID: PropTypes.string.isRequired,
-  getCarList: PropTypes.func.isRequired
+  getCarList: PropTypes.func.isRequired,
+  toggleNewCarForm: PropTypes.func.isRequired
 };
