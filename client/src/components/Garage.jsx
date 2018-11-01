@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Menu, Layout } from 'antd';
 
-//import NewCarForm from './NewCarForm';
+import NewCarForm from './NewCarForm';
 import Car from './Car';
 
 import { requestCarList, requestCarDelete } from '../../network/carRequests';
@@ -61,12 +61,12 @@ export default class Garage extends Component {
     const { isCreating, carList, displayedCar } = this.state;
     const { userID } = this.props;
 
-    // let toggle;
-    // if (isCreating) {
-    //   toggle = <NewCarForm userID={userID} getCarList={this.getCarList} />;
-    // } else {
-    const toggle = <Car displayedCar={displayedCar} userID={userID} deleteCar={this.deleteCar} />;
-    // }
+    let toggle;
+    if (isCreating) {
+      toggle = <NewCarForm userID={userID} getCarList={this.getCarList} />;
+    } else {
+      toggle = <Car displayedCar={displayedCar} userID={userID} deleteCar={this.deleteCar} />;
+    }
 
     return (
       <Layout style={{ padding: '24px 0' }}>

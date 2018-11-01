@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Form, Message } from 'semantic-ui-react';
+import { Form, Input, InputNumber, Button } from 'antd';
 
 import { postNewCar } from '../../network/carRequests';
 
@@ -14,18 +14,16 @@ export default class NewCarForm extends Component {
       make: '',
       model: '',
       modelYear: moment().year(),
-      mileage: 0,
-      isSubmited: false,
-      isWarning: false,
-      isPosting: false
+      mileage: 0
     };
 
     this.handleFormInput = this.handleFormInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleFormInput(e, { value, name }) {
-    this.setState({ [name]: value, isSubmited: false });
+  handleFormInput({ target }) {
+    const { value, name } = target;
+    this.setState({ [name]: value });
   }
 
   async handleSubmit(e) {
@@ -33,14 +31,10 @@ export default class NewCarForm extends Component {
     const { carName, make, model, modelYear, mileage } = this.state;
     const { userID, getCarList } = this.props;
 
-    this.setState({ isPosting: true });
     const payload = { carName, make, model, modelYear, mileage };
 
     await postNewCar(userID, payload);
     this.setState({
-      isSubmited: true,
-      isWarning: false,
-      isPosting: false,
       carName: '',
       make: '',
       model: '',
@@ -51,75 +45,32 @@ export default class NewCarForm extends Component {
   }
 
   render() {
-    const {
-      carName,
-      make,
-      model,
-      mileage,
-      modelYear,
-      isSubmited,
-      isWarning,
-      isPosting
-    } = this.state;
+    const { carName, make, model, mileage, modelYear } = this.state;
 
     return (
-      <div className="ui container">
-        <Form
-          success={isSubmited}
-          warning={isWarning}
-          loading={isPosting}
-          onSubmit={this.handleSubmit}
-        >
-          <Form.Input
-            fluid
-            type="text"
-            label="Car Name"
+      <Form onSubmit={this.handleSubmit}>
+        <Form.Item label="Car Name">
+          <Input
             name="carName"
             value={carName}
             onChange={this.handleFormInput}
+            placeholder="car name"
           />
-          <Form.Group widths="equal">
-            <Form.Input
-              fluid
-              required
-              type="text"
-              label="Make"
-              name="make"
-              value={make}
-              onChange={this.handleFormInput}
-            />
-            <Form.Input
-              fluid
-              required
-              type="text"
-              label="Model"
-              name="model"
-              value={model}
-              onChange={this.handleFormInput}
-            />
-            <Form.Input
-              fluid
-              required
-              type="number"
-              label="Model Year"
-              name="modelYear"
-              value={modelYear}
-              onChange={this.handleFormInput}
-            />
-          </Form.Group>
-          <Form.Input
-            fluid
-            required
-            type="number"
-            name="mileage"
-            label="Mileage"
-            value={mileage}
-            onChange={this.handleFormInput}
-          />
-          <Message success header="Car Created" content="You can now find it in your garage" />
-          <Form.Button content="Submit" type="submit" />
-        </Form>
-      </div>
+        </Form.Item>
+        <Form.Item label="Make" required>
+          <Input name="make" value={make} onChange={this.handleFormInput} placeholder="make" />
+        </Form.Item>
+        <Form.Item label="Model" required>
+          <Input name="model" value={model} onChange={this.handleFormInput} placeholder="model" />
+        </Form.Item>
+        <Form.Item label="Model Year" required>
+          <InputNumber name="modelYear" value={modelYear} onChange={this.handleFormInput} />
+        </Form.Item>
+        <Form.Item label="Mileage" required>
+          <InputNumber name="mileage" value={mileage} onChange={this.handleFormInput} />
+        </Form.Item>
+        <Button htmlType="submit">Submit</Button>
+      </Form>
     );
   }
 }
