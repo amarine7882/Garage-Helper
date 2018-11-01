@@ -20,23 +20,22 @@ export default class Nav extends Component {
     const { activeItem } = this.state;
 
     return (
-      <div>
-        <Menu
-          mode="horizontal"
-          theme="dark"
-          selectedKeys={[activeItem]}
-          onClick={this.handleMenuClick}
-        >
-          <Menu.Item key="garage">
-            <Icon type="car" theme="outlined" />
-            Garage
-          </Menu.Item>
-          <Menu.Item key="logout" style={{ float: 'right' }}>
-            <Icon type="logout" theme="outlined" />
-            Logout
-          </Menu.Item>
-        </Menu>
-      </div>
+      <Menu
+        mode="horizontal"
+        theme="dark"
+        selectedKeys={[activeItem]}
+        onClick={this.handleMenuClick}
+        style={{ lineHeight: '64px' }}
+      >
+        <Menu.Item key="garage">
+          <Icon type="car" theme="outlined" />
+          Garage
+        </Menu.Item>
+        <Menu.Item key="logout" style={{ float: 'right' }}>
+          <Icon type="logout" theme="outlined" />
+          Logout
+        </Menu.Item>
+      </Menu>
     );
   }
 }

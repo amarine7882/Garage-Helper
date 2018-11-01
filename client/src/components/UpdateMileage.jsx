@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'semantic-ui-react';
+import { Form, Button, Input } from 'antd';
 
 import { patchCarMileage } from '../../network/carRequests';
 
@@ -16,15 +16,17 @@ export default class UpdateMileage extends Component {
     this.updateMileage = this.updateMileage.bind(this);
   }
 
-  handleFormInput(e, { value }) {
+  handleFormInput({ target }) {
+    const { value } = target;
     this.setState({ updateMileage: value });
   }
 
   async updateMileage(e) {
     e.preventDefault();
     const { updateMileage } = this.state;
-    const { getCarData, userID, displayedCar } = this.props;
+    const { getCarData, userID, displayedCar, toggleUpdate } = this.props;
 
+    toggleUpdate();
     await patchCarMileage(userID, displayedCar, updateMileage);
     getCarData();
   }
@@ -34,14 +36,16 @@ export default class UpdateMileage extends Component {
 
     return (
       <Form onSubmit={this.updateMileage}>
-        <Form.Input
-          type="number"
-          name="updateMileage"
-          label="Update Mileage"
-          value={updateMileage}
-          onChange={this.handleFormInput}
-        />
-        <Form.Button content="Update" type="submit" />
+        <Form.Item>
+          Update Mileage:
+          <Input
+            type="number"
+            name="updateMileage"
+            value={updateMileage}
+            onChange={this.handleFormInput}
+          />
+        </Form.Item>
+        <Button htmlType="submit">Update</Button>
       </Form>
     );
   }
@@ -50,5 +54,6 @@ export default class UpdateMileage extends Component {
 UpdateMileage.propTypes = {
   userID: PropTypes.string.isRequired,
   displayedCar: PropTypes.string.isRequired,
-  getCarData: PropTypes.func.isRequired
+  getCarData: PropTypes.func.isRequired,
+  toggleUpdate: PropTypes.func.isRequired
 };

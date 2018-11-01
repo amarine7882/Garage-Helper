@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
+import { Layout } from 'antd';
 
 import Garage from './Garage';
 import Nav from './Nav';
+
+const { Content, Header } = Layout;
 
 class App extends Component {
   constructor(props) {
@@ -17,10 +20,14 @@ class App extends Component {
     const { userID } = this.state;
 
     return (
-      <div>
-        <Nav />
-        <Garage userID={userID} />
-      </div>
+      <Layout>
+        <Header style={{ position: 'fixed', width: '100%', zIndex: 1 }}>
+          <Nav />
+        </Header>
+        <Content style={{ padding: '0 50px', marginTop: 64 }}>
+          <Garage userID={userID} />
+        </Content>
+      </Layout>
     );
   }
 }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import AddServiceItem from './AddServiceItem';
 import ServiceItems from './ServiceItems';
 
 import {
@@ -15,12 +14,10 @@ export default class ServiceItemsContainer extends Component {
     super(props);
 
     this.state = {
-      serviceItems: [],
-      isAdding: false
+      serviceItems: []
     };
 
     this.getServiceItems = this.getServiceItems.bind(this);
-    this.toggleAddServiceItem = this.toggleAddServiceItem.bind(this);
     this.completeServiceItem = this.completeServiceItem.bind(this);
     this.deleteServiceItem = this.deleteServiceItem.bind(this);
   }
@@ -44,58 +41,31 @@ export default class ServiceItemsContainer extends Component {
     this.setState({ serviceItems });
   }
 
-  async deleteServiceItem(e) {
+  async deleteServiceItem({ target }) {
     const { displayedCar, userID } = this.props;
-    const { id } = e.target;
+    const { id } = target;
 
     await requestDeleteServiceItem(userID, displayedCar, id);
     this.getServiceItems();
   }
 
-  async completeServiceItem(e) {
+  async completeServiceItem({ target }) {
     const { displayedCar, userID, mileage } = this.props;
-    const { id } = e.target;
+    const { id } = target;
 
     await patchServiceItem(userID, displayedCar, id, mileage);
     this.getServiceItems();
   }
 
-  toggleAddServiceItem() {
-    const { isAdding } = this.state;
-
-    this.setState({ isAdding: !isAdding });
-  }
-
   render() {
-    const { serviceItems, isAdding } = this.state;
-    const { userID, displayedCar } = this.props;
+    const { serviceItems } = this.state;
 
-    let toggle;
-    if (isAdding) {
-      toggle = (
-        <AddServiceItem
-          userID={userID}
-          displayedCar={displayedCar}
-          toggleAddServiceItem={this.toggleAddServiceItem}
-          getServiceItems={this.getServiceItems}
-        />
-      );
-    } else {
-      toggle = (
-        <button type="button" onClick={this.toggleAddServiceItem}>
-          Add Service Item
-        </button>
-      );
-    }
     return (
-      <div>
-        {toggle}
-        <ServiceItems
-          serviceItems={serviceItems}
-          completeServiceItem={this.completeServiceItem}
-          deleteServiceItem={this.deleteServiceItem}
-        />
-      </div>
+      <ServiceItems
+        serviceItems={serviceItems}
+        completeServiceItem={this.completeServiceItem}
+        deleteServiceItem={this.deleteServiceItem}
+      />
     );
   }
 }

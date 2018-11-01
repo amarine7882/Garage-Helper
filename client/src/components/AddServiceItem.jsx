@@ -17,15 +17,14 @@ export default class AddServiceItem extends Component {
     this.handleFormInput = this.handleFormInput.bind(this);
   }
 
-  handleFormInput(e) {
-    const { name, value } = e.target;
-
+  handleFormInput({ target }) {
+    const { name, value } = target;
     this.setState({ [name]: value });
   }
 
   async handleSubmit(e) {
     e.preventDefault();
-    const { displayedCar, userID, getServiceItems, toggleAddServiceItem } = this.props;
+    const { displayedCar, userID, toggleAddServiceItem } = this.props;
     const { serviceName, serviceIntervalMonths, serviceIntervalMiles } = this.state;
 
     if (serviceName.length < 1 || (serviceIntervalMiles < 1 && serviceIntervalMonths < 1)) return;
@@ -36,10 +35,8 @@ export default class AddServiceItem extends Component {
       serviceName
     };
 
-    await postServiceItem(userID, displayedCar, payload);
-
-    getServiceItems();
     toggleAddServiceItem();
+    await postServiceItem(userID, displayedCar, payload);
   }
 
   render() {
@@ -94,6 +91,5 @@ export default class AddServiceItem extends Component {
 AddServiceItem.propTypes = {
   displayedCar: PropTypes.string.isRequired,
   userID: PropTypes.string.isRequired,
-  getServiceItems: PropTypes.func.isRequired,
   toggleAddServiceItem: PropTypes.func.isRequired
 };

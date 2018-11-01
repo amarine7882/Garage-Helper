@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Menu } from 'semantic-ui-react';
+import { Menu, Layout } from 'antd';
 
-import NewCarForm from './NewCarForm';
+//import NewCarForm from './NewCarForm';
 import Car from './Car';
-import CarSelector from './CarSelector';
 
 import { requestCarList, requestCarDelete } from '../../network/carRequests';
+import { makeCarListValue } from '../../helpers/helpers';
+
+const { Sider, Content } = Layout;
+const { SubMenu } = Menu;
 
 export default class Garage extends Component {
   constructor(props) {
@@ -50,29 +53,48 @@ export default class Garage extends Component {
     this.setState({ isCreating: !isCreating });
   }
 
-  changeDisplayedCar(e, { value }) {
-    this.setState({ displayedCar: value });
+  changeDisplayedCar({ key }) {
+    this.setState({ displayedCar: key });
   }
 
   render() {
     const { isCreating, carList, displayedCar } = this.state;
     const { userID } = this.props;
 
-    let toggle;
-    if (isCreating) {
-      toggle = <NewCarForm userID={userID} getCarList={this.getCarList} />;
-    } else {
-      toggle = <Car displayedCar={displayedCar} userID={userID} deleteCar={this.deleteCar} />;
-    }
+    // let toggle;
+    // if (isCreating) {
+    //   toggle = <NewCarForm userID={userID} getCarList={this.getCarList} />;
+    // } else {
+    const toggle = <Car displayedCar={displayedCar} userID={userID} deleteCar={this.deleteCar} />;
+    // }
 
     return (
-      <div>
-        <Menu secondary vertical>
-          <Menu.Item name="create new car" onClick={this.toggleNewCarForm} active={isCreating} />
-          <CarSelector carList={carList} changeDisplayedCar={this.changeDisplayedCar} />
-        </Menu>
-        {toggle}
-      </div>
+      <Layout style={{ padding: '24px 0' }}>
+        <Sider>
+          <Menu
+            mode="inline"
+            theme="dark"
+            defaultSelectedKeys={['carSelector']}
+            defaultOpenKeys={['carSelector']}
+          >
+            <Menu.Item key="createNewCar" onClick={this.toggleNewCarForm}>
+              Create New Car
+            </Menu.Item>
+
+            <SubMenu key="carSelector" title="Select Your Car">
+              {carList.map(car => {
+                const { _id } = car;
+                return (
+                  <Menu.Item key={_id} onClick={this.changeDisplayedCar}>
+                    {makeCarListValue(car)}
+                  </Menu.Item>
+                );
+              })}
+            </SubMenu>
+          </Menu>
+        </Sider>
+        <Content style={{ padding: '0 24px', minHeight: 280 }}>{toggle}</Content>
+      </Layout>
     );
   }
 }
