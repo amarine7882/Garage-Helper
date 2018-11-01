@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu } from 'semantic-ui-react';
+import { Menu, Icon } from 'antd';
 
 export default class Nav extends Component {
   constructor(props) {
@@ -12,8 +12,8 @@ export default class Nav extends Component {
     this.handleMenuClick = this.handleMenuClick.bind(this);
   }
 
-  handleMenuClick(e, { name }) {
-    this.setState({ activeItem: name });
+  handleMenuClick({ key }) {
+    this.setState({ activeItem: key });
   }
 
   render() {
@@ -21,17 +21,24 @@ export default class Nav extends Component {
 
     return (
       <div>
-        <Menu pointing secondary>
-          <Menu.Item
-            name="garage"
-            active={activeItem === 'garage'}
-            onClick={this.handleMenuClick}
-          />
-          <Menu.Menu position="right">
-            <Menu.Item name="logout" />
-          </Menu.Menu>
+        <Menu
+          mode="horizontal"
+          theme="dark"
+          selectedKeys={[activeItem]}
+          onClick={this.handleMenuClick}
+        >
+          <Menu.Item key="garage">
+            <Icon type="car" theme="outlined" />
+            Garage
+          </Menu.Item>
+          <Menu.Item key="logout" style={{ float: 'right' }}>
+            <Icon type="logout" theme="outlined" />
+            Logout
+          </Menu.Item>
         </Menu>
       </div>
     );
   }
 }
+
+// TODO modularize style
