@@ -51,7 +51,11 @@ export default class Garage extends Component {
     this.setState({ isCreating: !isCreating });
   }
 
-  changeDisplayedCar({ key }) {
+  async changeDisplayedCar({ key }) {
+    const { isCreating } = this.state;
+    if (isCreating) {
+      await this.setState({ isCreating: false });
+    }
     this.setState({ displayedCar: key });
   }
 
