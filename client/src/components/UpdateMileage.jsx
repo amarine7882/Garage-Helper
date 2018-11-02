@@ -1,49 +1,51 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button, Input } from 'antd';
+import { Form, Button, InputNumber } from 'antd';
 
 import { patchCarMileage } from '../../network/carRequests';
 
-export default class UpdateMileage extends Component {
+class UpdateMileageTemplate extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      updateMileage: 0
-    };
-
-    this.handleFormInput = this.handleFormInput.bind(this);
-    this.updateMileage = this.updateMileage.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.mileageUpdateValidator = this.mileageUpdateValidator.bind(this);
   }
 
-  handleFormInput({ target }) {
-    const { value } = target;
-    this.setState({ updateMileage: value });
-  }
-
-  async updateMileage(e) {
+  handleSubmit(e) {
     e.preventDefault();
-    const { updateMileage } = this.state;
-    const { getCarData, userID, displayedCar, toggleUpdate } = this.props;
+    const { getCarData, userID, displayedCar, toggleUpdate, form } = this.props;
 
-    toggleUpdate();
-    await patchCarMileage(userID, displayedCar, updateMileage);
-    getCarData();
+    form.validateFields(async (err, { updateMileage }) => {
+      if (!err) {
+        toggleUpdate();
+        await patchCarMileage(userID, displayedCar, updateMileage);
+        getCarData();
+      }
+    });
+  }
+
+  mileageUpdateValidator(rule, value, callback) {
+    const { mileage } = this.props;
+    if (value < mileage && value !== '') {
+      callback('You must enter a mileage higher than your current mileage');
+    } else {
+      callback();
+    }
   }
 
   render() {
-    const { updateMileage } = this.state;
-
+    const { mileage, form } = this.props;
+    const { getFieldDecorator } = form;
     return (
-      <Form onSubmit={this.updateMileage}>
-        <Form.Item>
-          Update Mileage:
-          <Input
-            type="number"
-            name="updateMileage"
-            value={updateMileage}
-            onChange={this.handleFormInput}
-          />
+      <Form onSubmit={this.handleSubmit}>
+        <Form.Item label="Update Mileage" required>
+          {getFieldDecorator('updateMileage', {
+            initialValue: mileage + 1,
+            rules: [
+              { required: true, message: "Please enter your car's current mileage" },
+              { validator: this.mileageUpdateValidator }
+            ]
+          })(<InputNumber min={mileage + 1} />)}
         </Form.Item>
         <Button htmlType="submit">Update</Button>
       </Form>
@@ -51,9 +53,15 @@ export default class UpdateMileage extends Component {
   }
 }
 
-UpdateMileage.propTypes = {
+const UpdateMileage = Form.create()(UpdateMileageTemplate);
+
+export default UpdateMileage;
+
+UpdateMileageTemplate.propTypes = {
   userID: PropTypes.string.isRequired,
   displayedCar: PropTypes.string.isRequired,
   getCarData: PropTypes.func.isRequired,
-  toggleUpdate: PropTypes.func.isRequired
+  toggleUpdate: PropTypes.func.isRequired,
+  form: PropTypes.instanceOf(Object).isRequired,
+  mileage: PropTypes.number.isRequired
 };

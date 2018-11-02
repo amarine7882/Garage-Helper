@@ -14,9 +14,13 @@ export default class Car extends Component {
     super(props);
 
     this.state = {
-      carData: undefined,
+      carData: {
+        mileage: 0,
+        carName: ''
+      },
       isUpdating: false,
-      isAdding: false
+      isAdding: false,
+      isLoading: true
     };
 
     this.getCarData = this.getCarData.bind(this);
@@ -36,9 +40,10 @@ export default class Car extends Component {
     const { displayedCar, userID } = this.props;
 
     if (!displayedCar) return;
-
+    // TODO: fix loading display on mileage refresh
+    this.setState({ isLoading: true, isAdding: false, isUpdating: false });
     const data = await requestCarData(userID, displayedCar);
-    this.setState({ carData: data });
+    this.setState({ carData: data, isLoading: false });
   }
 
   toggleUpdate() {
@@ -52,11 +57,10 @@ export default class Car extends Component {
   }
 
   render() {
-    const { carData, isUpdating, isAdding } = this.state;
+    const { carData, isUpdating, isAdding, isLoading } = this.state;
     const { displayedCar, userID, deleteCar } = this.props;
 
     if (!displayedCar) return null;
-    if (!carData) return <Icon type="loading" theme="outlined" style={{ fontSize: '80px' }} />;
     const { carName, make, model, modelYear, mileage } = carData;
 
     let mileageToggle;
@@ -67,6 +71,7 @@ export default class Car extends Component {
           displayedCar={displayedCar}
           getCarData={this.getCarData}
           toggleUpdate={this.toggleUpdate}
+          mileage={mileage}
         />
       );
     }
@@ -89,6 +94,7 @@ export default class Car extends Component {
     return (
       <Card>
         <Card
+          loading={isLoading}
           style={{ width: 600, marginBottom: 30 }}
           actions={[
             <Icon
@@ -109,8 +115,8 @@ export default class Car extends Component {
           <h3>{carName}</h3>
           <h2>{`${modelYear} ${make} ${model}`}</h2>
           <p>{`Mileage: ${numberWithCommas(mileage)}`}</p>
+          {mileageToggle}
         </Card>
-        {mileageToggle}
         {serviceItemsToggle}
       </Card>
     );
