@@ -9,7 +9,6 @@ import { generateModelYears } from '../../helpers/helpers';
 class NewCarFormTemplate extends Component {
   constructor(props) {
     super(props);
-
     this.years = generateModelYears();
 
     this.handleSubmit = this.handleSubmit.bind(this);
