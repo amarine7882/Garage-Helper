@@ -1,5 +1,5 @@
 {
-  "name": "hrsf101-mvp",
+  "name": "Garage-Helper",
   "version": "1.0.0",
   "description": "Car service assistant",
   "main": "index.jsx",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/amarine7882/hrsf101-mvp.git"
+    "url": "git+https://github.com/amarine7882/Garage-Helper.git"
   },
   "author": "Andrew Marine",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/amarine7882/hrsf101-mvp/issues"
+    "url": "https://github.com/amarine7882/Garage-Helper/issues"
   },
-  "homepage": "https://github.com/amarine7882/hrsf101-mvp#readme",
+  "homepage": "https://github.com/amarine7882/Garage-Helper#readme",
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "antd": "^3.10.3",
