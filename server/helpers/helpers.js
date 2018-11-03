@@ -2,10 +2,8 @@ const moment = require('moment');
 
 exports.findClosestCompletionForDateOrMileage = (
   {
-    serviceName,
     lastCompletedDate,
     lastCompletedMileage,
-    nextDueDate,
     nextDueMileage,
     serviceIntervalMiles,
     serviceIntervalMonths
@@ -21,7 +19,7 @@ exports.findClosestCompletionForDateOrMileage = (
     mileagePercentComplete = progress / serviceIntervalMiles;
   }
 
-  if (nextDueDate) {
+  if (serviceIntervalMonths) {
     const now = moment(new Date());
     const lastDue = moment(lastCompletedDate);
     const totalDays = serviceIntervalMonths * 30;
@@ -33,11 +31,14 @@ exports.findClosestCompletionForDateOrMileage = (
 
   if (!nextDueMileage) {
     return datePercentComplete;
-  } else if (!nextDueDate) {
+  }
+  if (!serviceIntervalMonths) {
     return mileagePercentComplete;
-  } else if (mileagePercentComplete > datePercentComplete) {
-    mileagePercentComplete;
-  } else if (datePercentComplete > mileagePercentComplete) {
+  }
+  if (mileagePercentComplete > datePercentComplete) {
+    return mileagePercentComplete;
+  }
+  if (datePercentComplete > mileagePercentComplete) {
     return datePercentComplete;
   }
 };
