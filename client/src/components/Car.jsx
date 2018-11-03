@@ -14,10 +14,7 @@ export default class Car extends Component {
     super(props);
 
     this.state = {
-      carData: {
-        mileage: 0,
-        carName: ''
-      },
+      carData: {},
       isUpdating: false,
       isAdding: false,
       isLoading: true
@@ -32,7 +29,10 @@ export default class Car extends Component {
     const { displayedCar } = this.props;
 
     if (prevProps.displayedCar !== displayedCar) {
+      this.setState({ isAdding: false, isUpdating: false, isLoading: true });
       this.getCarData();
+    } else {
+      return false;
     }
   }
 
@@ -40,28 +40,31 @@ export default class Car extends Component {
     const { displayedCar, userID } = this.props;
 
     if (!displayedCar) return;
-    // TODO: fix loading display on mileage refresh
-    this.setState({ isLoading: true, isAdding: false, isUpdating: false });
+
     const data = await requestCarData(userID, displayedCar);
     this.setState({ carData: data, isLoading: false });
   }
 
   toggleUpdate() {
     const { isUpdating } = this.state;
-    this.setState({ isUpdating: !isUpdating });
+    this.setState({ isUpdating: !isUpdating, isAdding: false });
   }
 
   toggleAddServiceItem() {
     const { isAdding } = this.state;
-    this.setState({ isAdding: !isAdding });
+    this.setState({ isAdding: !isAdding, isUpdating: false });
   }
 
   render() {
-    const { carData, isUpdating, isAdding, isLoading } = this.state;
     const { displayedCar, userID, deleteCar } = this.props;
+    const {
+      carData: { carName, make, model, modelYear, mileage },
+      isUpdating,
+      isAdding,
+      isLoading
+    } = this.state;
 
     if (!displayedCar) return null;
-    const { carName, make, model, modelYear, mileage } = carData;
 
     let mileageToggle;
     if (isUpdating) {
@@ -109,7 +112,12 @@ export default class Car extends Component {
               onClick={this.toggleUpdate}
               style={{ fontSize: '24px' }}
             />,
-            <Icon type="delete" theme="outlined" onClick={deleteCar} style={{ fontSize: '24px' }} />
+            <Icon
+              type="delete"
+              theme="outlined"
+              onClick={deleteCar}
+              style={{ fontSize: '24px', color: 'red' }}
+            />
           ]}
         >
           <h3>{carName}</h3>
