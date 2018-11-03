@@ -1,6 +1,7 @@
+/* eslint react/no-did-update-set-state: 0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Card } from 'antd';
+import { Icon, Card, Skeleton } from 'antd';
 
 import ServiceItemsContainer from './ServiceItemsContainer';
 import UpdateMileage from './UpdateMileage';
@@ -31,9 +32,8 @@ export default class Car extends Component {
     if (prevProps.displayedCar !== displayedCar) {
       this.setState({ isAdding: false, isUpdating: false, isLoading: true });
       this.getCarData();
-    } else {
-      return false;
     }
+    return false;
   }
 
   async getCarData() {
@@ -94,6 +94,23 @@ export default class Car extends Component {
       );
     }
 
+    let loader;
+    if (isLoading) {
+      loader = (
+        <div>
+          <Card style={{ width: 500, marginBottom: 10 }}>
+            <Skeleton loading active title />
+          </Card>
+          <Card style={{ width: 500, marginBottom: 10 }}>
+            <Skeleton loading active title />
+          </Card>
+          <Card style={{ width: 500, marginBottom: 10 }}>
+            <Skeleton loading active title />
+          </Card>
+        </div>
+      );
+    }
+
     return (
       <Card>
         <Card
@@ -126,6 +143,7 @@ export default class Car extends Component {
           {mileageToggle}
         </Card>
         {serviceItemsToggle}
+        {loader}
       </Card>
     );
   }
