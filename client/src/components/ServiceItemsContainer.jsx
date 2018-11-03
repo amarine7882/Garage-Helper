@@ -71,5 +71,9 @@ export default class ServiceItemsContainer extends Component {
 ServiceItemsContainer.propTypes = {
   displayedCar: PropTypes.string.isRequired,
   userID: PropTypes.string.isRequired,
-  mileage: PropTypes.number.isRequired
+  mileage: PropTypes.number
+};
+
+ServiceItemsContainer.defaultProps = {
+  mileage: undefined
 };
