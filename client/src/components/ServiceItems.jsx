@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Card, Icon } from 'antd';
 
-import { displayIntervalsIfPresent, displayNextDueIfPresent } from '../../helpers/helpers';
+import {
+  displayIntervalsIfPresent,
+  displayNextDueIfPresent,
+  numberWithCommas
+} from '../../helpers/helpers';
 
 const ServiceItems = ({ serviceItems, completeServiceItem, deleteServiceItem }) => (
   <div>
@@ -21,20 +25,33 @@ const ServiceItems = ({ serviceItems, completeServiceItem, deleteServiceItem }) 
         <Card
           key={_id}
           title={serviceName}
-          style={{ width: 500 }}
+          style={{ width: 500, marginBottom: 10 }}
           actions={[
-            <Icon type="delete" theme="outlined" onClick={() => deleteServiceItem(_id)} />,
-            <Icon type="check" theme="outlined" onClick={() => completeServiceItem(_id)} />
+            <Icon
+              type="check"
+              theme="outlined"
+              onClick={() => completeServiceItem(_id)}
+              style={{ color: 'green' }}
+            />,
+            <Icon
+              type="delete"
+              theme="outlined"
+              onClick={() => deleteServiceItem(_id)}
+              style={{ color: 'red' }}
+            />
           ]}
         >
-          <h3>{displayNextDueIfPresent(nextDueDate, nextDueMileage)}</h3>
+          <h3>{displayNextDueIfPresent(nextDueDate, nextDueMileage, serviceIntervalMonths)}</h3>
           <p>{displayIntervalsIfPresent(serviceIntervalMonths, serviceIntervalMiles)}</p>
           <p>
             {`Last Completed on: ${
               lastCompletedDate ? moment(lastCompletedDate).calendar() : 'Not Completed Yet'
             }`}
           </p>
-          <p>{`Mileage when last completed: ${lastCompletedMileage || 'Not completed yet'}`}</p>
+          <p>
+            {`Mileage when last completed: ${numberWithCommas(lastCompletedMileage) ||
+              'Not completed yet'}`}
+          </p>
         </Card>
       )
     )}
