@@ -10,10 +10,24 @@ exports.getServiceItems = ({ carID }) =>
       const { mileage } = data;
 
       data.serviceItems.sort((a, b) => {
-        return (
-          findClosestCompletionForDateOrMileage(a, mileage) <
-          findClosestCompletionForDateOrMileage(b, mileage)
-        );
+        const aFac = findClosestCompletionForDateOrMileage(a, mileage);
+        const bFac = findClosestCompletionForDateOrMileage(b, mileage);
+
+        if (aFac.completionFactor > bFac.completionFactor) return -1;
+        if (aFac.completionFactor < bFac.completionFactor) return 1;
+        if (aFac.completionFactor === bFac.completionFactor) return 0;
+
+        if (aFac.type === 'mile' && bFac.type === 'mile') {
+          if (a.nextDueMileage > b.nextDueMileage) return 1;
+          if (a.nextDueMileage < b.nextDueMileage) return -1;
+          if (a.nextDueMileage === b.nextDueMileage) return 0;
+        }
+        if (aFac.type === 'date' && bFac.type === 'date') {
+          if (moment(a.nextDueDate) > moment(b.nextDueDate)) return 1;
+          if (moment(a.nextDueDate) < moment(b.nextDueDate)) return -1;
+          if (moment(a.nextDueDate) === moment(b.nextDueDate)) return 0;
+        }
+        return 0;
       });
       return data;
     })
