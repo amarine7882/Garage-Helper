@@ -13,10 +13,11 @@ exports.getServiceItems = ({ carID }) =>
         const aFac = findClosestCompletionForDateOrMileage(a, mileage);
         const bFac = findClosestCompletionForDateOrMileage(b, mileage);
 
-        if (aFac.completionFactor > bFac.completionFactor) return -1;
-        if (aFac.completionFactor < bFac.completionFactor) return 1;
-        if (aFac.completionFactor === bFac.completionFactor) return 0;
-
+        if (aFac.type !== bFac.type) {
+          if (aFac.completionFactor > bFac.completionFactor) return -1;
+          if (aFac.completionFactor < bFac.completionFactor) return 1;
+          if (aFac.completionFactor === bFac.completionFactor) return 0;
+        }
         if (aFac.type === 'mile' && bFac.type === 'mile') {
           if (a.nextDueMileage > b.nextDueMileage) return 1;
           if (a.nextDueMileage < b.nextDueMileage) return -1;
