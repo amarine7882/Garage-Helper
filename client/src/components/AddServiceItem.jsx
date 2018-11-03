@@ -1,3 +1,4 @@
+/* eslint class-methods-use-this: 0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Input, InputNumber, Button } from 'antd';
@@ -9,6 +10,8 @@ class AddServiceItemTemplate extends Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.validationSync = this.validationSync.bind(this);
+    this.maxMonthValidator = this.maxMonthValidator.bind(this);
+    this.maxMileValidator = this.maxMileValidator.bind(this);
     this.serviceIntervalValidator = this.serviceIntervalValidator.bind(this);
   }
 
@@ -38,7 +41,25 @@ class AddServiceItemTemplate extends Component {
 
   validationSync() {
     const { form } = this.props;
-    form.validateFields(['serviceIntervalMonths', 'serviceIntervalMiles'], { force: true });
+    setTimeout(() => {
+      form.validateFields(['serviceIntervalMonths', 'serviceIntervalMiles'], { force: true });
+    }, 10);
+  }
+
+  maxMonthValidator(rule, value, callback) {
+    if (value > 120) {
+      callback('Please enter a service Interval within 10 years');
+    } else {
+      callback();
+    }
+  }
+
+  maxMileValidator(rule, value, callback) {
+    if (value > 1000000) {
+      callback('Please enter a service interval within 1,000,000 miles');
+    } else {
+      callback();
+    }
   }
 
   render() {
@@ -54,25 +75,33 @@ class AddServiceItemTemplate extends Component {
           </Form.Item>
           <Form.Item label="Service Interval In Months" colon={false}>
             {getFieldDecorator('serviceIntervalMonths', {
-              rules: [{ validator: this.serviceIntervalValidator }]
+              rules: [
+                { validator: this.serviceIntervalValidator },
+                { validator: this.maxMonthValidator }
+              ]
             })(
               <InputNumber
                 placeholder="Months"
                 min={0}
+                max={120}
                 style={{ width: 200 }}
-                onChange={() => setTimeout(this.validationSync, 10)}
+                onChange={this.validationSync}
               />
             )}
           </Form.Item>
           <Form.Item label="Service Interval In Miles" colon={false}>
             {getFieldDecorator('serviceIntervalMiles', {
-              rules: [{ validator: this.serviceIntervalValidator }]
+              rules: [
+                { validator: this.serviceIntervalValidator },
+                { validator: this.maxMileValidator }
+              ]
             })(
               <InputNumber
                 placeholder="Miles"
                 min={0}
+                max={1000000}
                 style={{ width: 200 }}
-                onChange={() => setTimeout(this.validationSync, 10)}
+                onChange={this.validationSync}
               />
             )}
           </Form.Item>
