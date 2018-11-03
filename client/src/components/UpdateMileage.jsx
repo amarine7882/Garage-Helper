@@ -27,7 +27,7 @@ class UpdateMileageTemplate extends Component {
   mileageUpdateValidator(rule, value, callback) {
     const { mileage } = this.props;
     if (value < mileage && value !== '') {
-      callback('You must enter a mileage higher than your current mileage');
+      callback('You must enter a mileage higher than your last mileage');
     } else {
       callback();
     }
@@ -38,7 +38,7 @@ class UpdateMileageTemplate extends Component {
     const { getFieldDecorator } = form;
     return (
       <Form onSubmit={this.handleSubmit}>
-        <Form.Item label="Update Mileage" required>
+        <Form.Item label="Enter Current Mileage" colon={false}>
           {getFieldDecorator('updateMileage', {
             initialValue: mileage + 1,
             rules: [
