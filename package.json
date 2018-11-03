@@ -4,9 +4,9 @@
   "description": "Car service assistant",
   "main": "index.jsx",
   "scripts": {
-    "start": "node ./server/index.js",
-    "start:dev": "nodemon ./server/index.js",
-    "react-dev": "webpack-dev-server -d --watch --hot",
+    "start:p": "node ./server/index.js",
+    "start": "nodemon ./server/index.js",
+    "build": "webpack-dev-server -d --watch --hot",
     "test": "jest"
   },
   "repository": {
