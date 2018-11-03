@@ -30,15 +30,15 @@ exports.findClosestCompletionForDateOrMileage = (
   }
 
   if (!nextDueMileage) {
-    return datePercentComplete;
+    return { type: 'date', completionFactor: datePercentComplete };
   }
   if (!serviceIntervalMonths) {
-    return mileagePercentComplete;
+    return { type: 'mile', completionFactor: mileagePercentComplete };
   }
   if (mileagePercentComplete > datePercentComplete) {
-    return mileagePercentComplete;
+    return { type: 'mile', completionFactor: mileagePercentComplete };
   }
   if (datePercentComplete > mileagePercentComplete) {
-    return datePercentComplete;
+    return { type: 'date', completionFactor: datePercentComplete };
   }
 };
