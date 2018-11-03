@@ -32,20 +32,20 @@ class NewCarFormTemplate extends Component {
     const { getFieldDecorator } = form;
     return (
       <Form onSubmit={this.handleSubmit} style={{ width: 500, marginLeft: '25%' }}>
-        <Form.Item label="Car Name">
+        <Form.Item label="Car Name" colon={false}>
           {getFieldDecorator('carName')(<Input placeholder="Car Name" />)}
         </Form.Item>
-        <Form.Item label="Make" required>
+        <Form.Item label="Make" colon={false}>
           {getFieldDecorator('make', {
             rules: [{ required: true, message: "Please input your car's make" }]
           })(<Input placeholder="Make" />)}
         </Form.Item>
-        <Form.Item label="Model" required>
+        <Form.Item label="Model" colon={false}>
           {getFieldDecorator('model', {
             rules: [{ required: true, message: "Please input your car's model" }]
           })(<Input placeholder="Model" />)}
         </Form.Item>
-        <Form.Item label="Model Year" required>
+        <Form.Item label="Model Year" colon={false}>
           {getFieldDecorator('modelYear', {
             initialValue: moment().year()
           })(
@@ -58,7 +58,7 @@ class NewCarFormTemplate extends Component {
             </Select>
           )}
         </Form.Item>
-        <Form.Item label="Mileage" required>
+        <Form.Item label="Mileage" colon={false}>
           {getFieldDecorator('mileage', {
             initialValue: 0,
             rules: [{ required: true, message: "Please input your car's mileage" }]
