@@ -33,7 +33,7 @@ class NewCarFormTemplate extends Component {
     return (
       <Form onSubmit={this.handleSubmit} style={{ width: 500, marginLeft: '25%' }}>
         <Form.Item label="Car Name" colon={false}>
-          {getFieldDecorator('carName')(<Input placeholder="Car Name" />)}
+          {getFieldDecorator('carName')(<Input placeholder="Car Name (Optional)" />)}
         </Form.Item>
         <Form.Item label="Make" colon={false}>
           {getFieldDecorator('make', {
