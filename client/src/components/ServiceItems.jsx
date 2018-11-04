@@ -25,7 +25,7 @@ const ServiceItems = ({ serviceItems, completeServiceItem, deleteServiceItem }) 
         <Card
           key={_id}
           title={serviceName}
-          style={{ width: 500, marginBottom: 10 }}
+          style={{ width: 500, margin: '0px auto 10px auto' }}
           actions={[
             <span
               role="button"

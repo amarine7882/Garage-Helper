@@ -120,7 +120,7 @@ export default class Car extends Component {
       <Card>
         <Card
           loading={isLoading}
-          style={{ width: 600, marginBottom: 30 }}
+          style={{ width: 600, margin: '0px auto 30px auto' }}
           actions={[
             <span
               role="button"

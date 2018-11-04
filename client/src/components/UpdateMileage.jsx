@@ -37,7 +37,7 @@ class UpdateMileageTemplate extends Component {
     const { mileage, form } = this.props;
     const { getFieldDecorator } = form;
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.handleSubmit} style={{ margin: 'auto' }}>
         <Form.Item label="Enter Current Mileage" colon={false}>
           {getFieldDecorator('updateMileage', {
             initialValue: mileage + 1,

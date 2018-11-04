@@ -31,7 +31,7 @@ class NewCarFormTemplate extends Component {
     const { form } = this.props;
     const { getFieldDecorator } = form;
     return (
-      <Form onSubmit={this.handleSubmit} style={{ width: 500, marginLeft: '25%' }}>
+      <Form onSubmit={this.handleSubmit} style={{ width: 500, margin: 'auto' }}>
         <Form.Item label="Car Name" colon={false}>
           {getFieldDecorator('carName')(<Input placeholder="Car Name (Optional)" />)}
         </Form.Item>
