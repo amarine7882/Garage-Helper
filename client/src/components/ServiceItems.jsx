@@ -27,22 +27,24 @@ const ServiceItems = ({ serviceItems, completeServiceItem, deleteServiceItem }) 
           title={serviceName}
           style={{ width: 500, marginBottom: 10 }}
           actions={[
-            <span>
-              <Icon
-                type="check"
-                theme="outlined"
-                onClick={() => completeServiceItem(_id)}
-                style={{ color: 'green', marginRight: 10 }}
-              />
+            <span
+              role="button"
+              tabIndex={0}
+              onKeyPress={() => completeServiceItem(_id)}
+              onClick={() => completeServiceItem(_id)}
+              style={{ outline: 'none' }}
+            >
+              <Icon type="check" theme="outlined" style={{ color: 'green', marginRight: 10 }} />
               Mark Complete
             </span>,
-            <span>
-              <Icon
-                type="delete"
-                theme="outlined"
-                onClick={() => deleteServiceItem(_id)}
-                style={{ color: 'red', marginRight: 10 }}
-              />
+            <span
+              role="button"
+              tabIndex={0}
+              onKeyPress={() => completeServiceItem(_id)}
+              onClick={() => deleteServiceItem(_id)}
+              style={{ outline: 'none' }}
+            >
+              <Icon type="delete" theme="outlined" style={{ color: 'red', marginRight: 10 }} />
               Delete Service
             </span>
           ]}

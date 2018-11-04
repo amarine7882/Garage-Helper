@@ -122,29 +122,40 @@ export default class Car extends Component {
           loading={isLoading}
           style={{ width: 600, marginBottom: 30 }}
           actions={[
-            <span>
-              <Icon
-                type="plus"
-                theme="outlined"
-                onClick={this.toggleAddServiceItem}
-                style={{ fontSize: '24px', marginRight: 10 }}
-              />
+            <span
+              role="button"
+              tabIndex={0}
+              onKeyPress={this.toggleAddServiceItem}
+              onClick={this.toggleAddServiceItem}
+              style={{ outline: 'none' }}
+            >
+              <Icon type="plus" theme="outlined" style={{ fontSize: '24px', marginRight: 10 }} />
               Add Service
             </span>,
-            <span>
+            <span
+              role="button"
+              tabIndex={0}
+              onKeyPress={this.toggleUpdate}
+              onClick={this.toggleUpdate}
+              style={{ outline: 'none' }}
+            >
               <Icon
                 type="arrow-up"
                 theme="outlined"
-                onClick={this.toggleUpdate}
                 style={{ fontSize: '24px', marginRight: 10 }}
               />
               Update Mileage
             </span>,
-            <span>
+            <span
+              role="button"
+              tabIndex={0}
+              onKeyPress={deleteCar}
+              onClick={deleteCar}
+              style={{ outline: 'none' }}
+            >
               <Icon
                 type="delete"
                 theme="outlined"
-                onClick={deleteCar}
                 style={{ fontSize: '24px', color: 'red', marginRight: 10 }}
               />
               Delete Car
