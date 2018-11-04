@@ -27,18 +27,24 @@ const ServiceItems = ({ serviceItems, completeServiceItem, deleteServiceItem }) 
           title={serviceName}
           style={{ width: 500, marginBottom: 10 }}
           actions={[
-            <Icon
-              type="check"
-              theme="outlined"
-              onClick={() => completeServiceItem(_id)}
-              style={{ color: 'green' }}
-            />,
-            <Icon
-              type="delete"
-              theme="outlined"
-              onClick={() => deleteServiceItem(_id)}
-              style={{ color: 'red' }}
-            />
+            <span>
+              <Icon
+                type="check"
+                theme="outlined"
+                onClick={() => completeServiceItem(_id)}
+                style={{ color: 'green', marginRight: 10 }}
+              />
+              Mark Complete
+            </span>,
+            <span>
+              <Icon
+                type="delete"
+                theme="outlined"
+                onClick={() => deleteServiceItem(_id)}
+                style={{ color: 'red', marginRight: 10 }}
+              />
+              Delete Service
+            </span>
           ]}
         >
           <h3>{displayNextDueIfPresent(nextDueDate, nextDueMileage, serviceIntervalMonths)}</h3>
