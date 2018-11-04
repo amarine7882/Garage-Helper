@@ -26,6 +26,11 @@ export default class Car extends Component {
     this.toggleAddServiceItem = this.toggleAddServiceItem.bind(this);
   }
 
+  componentDidMount() {
+    const { displayedCar } = this.props;
+    if (displayedCar) this.getCarData();
+  }
+
   componentDidUpdate(prevProps) {
     const { displayedCar } = this.props;
 
