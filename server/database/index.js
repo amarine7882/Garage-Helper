@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-const { MONGO_USER, MONGO_PASS } = require('../config');
+// const { MONGO_USER, MONGO_PASS } = require('../config');
+const MONGO_USER = 'fake';
+const MONGO_PASS = 'fake';
 
 mongoose
   .connect(
