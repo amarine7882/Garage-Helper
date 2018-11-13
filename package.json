@@ -5,10 +5,10 @@
   "main": "index.jsx",
   "scripts": {
     "start": "nodemon ./server/index.js",
-    "build": "webpack-dev-server -d --watch --hot",
+    "build": "webpack-dev-server --watch --hot",
     "test": "jest",
-    "build:p": "webpack -p",
-    "build:server:p": "webpack -p --config ./serverProd.config.js"
+    "build:p": "webpack --config ./clientProd.config.js",
+    "build:server:p": "webpack --config ./serverProd.config.js"
   },
   "repository": {
     "type": "git",
@@ -44,6 +44,7 @@
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.2",
     "babel-plugin-import": "^1.11.0",
+    "compression-webpack-plugin": "^2.0.0",
     "css-loader": "^1.0.0",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.0",
