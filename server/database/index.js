@@ -1,8 +1,12 @@
+/* eslint prefer-destructuring: 0 */
 const mongoose = require('mongoose');
 
-// const { MONGO_USER, MONGO_PASS } = require('../config');
-const MONGO_USER = 'fake';
-const MONGO_PASS = 'fake';
+let { MONGO_USER, MONGO_PASS } = require('../config');
+
+if (!MONGO_USER || !MONGO_PASS) {
+  MONGO_USER = process.env.MONGO_USER;
+  MONGO_PASS = process.env.MONGO_PASS;
+}
 
 mongoose
   .connect(

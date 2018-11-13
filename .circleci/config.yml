@@ -28,6 +28,13 @@ jobs:
           command: yarn test
 
       - run:
+          name: Create config files
+          command: |
+            touch server/config
+            echo "exports.MONGO_USER = undefined;" >> server/config
+            echo "exports.MONGO_PASS = undefined;" >> server/config
+
+      - run:
           name: Build bundles
           command: |
             yarn run build:server:p
@@ -46,7 +53,7 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/node:10.11
+      - image: circleci/python:2.7-jessie
 
     working_directory: ~/Garage-Helper
 
