@@ -33,6 +33,8 @@ jobs:
             yarn run build:server:p
             yarn run build:p
 
+      - setup_remote_docker
+
       - run:
           name: Build and push Docker image
           command: |
