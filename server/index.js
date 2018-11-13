@@ -8,7 +8,7 @@ const express = require('express');
 require('./database/index');
 const router = require('./routes');
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const DIR_PATH = path.join(__dirname, '/../public');
 
 const server = express();
