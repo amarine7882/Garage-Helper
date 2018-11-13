@@ -2,7 +2,7 @@ FROM node:10-alpine
 
 WORKDIR /server
 
-COPY . ./server
+COPY . /server
 
 RUN yarn install
 
