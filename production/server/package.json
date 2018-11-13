@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "Car service assistant",
   "main": "index.jsx",
+  "license": "UNLICENSED",
   "scripts": {
-    "start": "node ./server/index.js"
+    "start": "node ./dist/bundle.js"
   },
   "dependencies": {
     "compression": "^1.7.3",
