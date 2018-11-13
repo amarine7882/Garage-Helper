@@ -7,7 +7,7 @@ const BUILD_DIR = path.join(__dirname, '/production/app');
 module.exports = {
   entry: `${SRC_DIR}/index.jsx`,
   mode: 'production',
-  plugins: [new CompressionPlugin()],
+  plugins: [new CompressionPlugin({ filename: 'bundle.js' })],
   output: {
     filename: 'bundle.js',
     path: BUILD_DIR
