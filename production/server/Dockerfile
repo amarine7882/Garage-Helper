@@ -1,11 +1,13 @@
 FROM node:10-alpine
 
-COPY package*.json ./
+WORKDIR /server
+
+COPY . ./server
 
 RUN yarn install
 
-COPY . .
-
 EXPOSE 3000
+
+ENV NODE_ENV production
 
 CMD ["yarn", "start"]
