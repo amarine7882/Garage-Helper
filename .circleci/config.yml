@@ -28,12 +28,12 @@ jobs:
           command: yarn test
 
       - run:
-        name: Build server
-        command: yarn run build:server:p
+          name: Build server
+          command: yarn run build:server:p
 
       - run:
-        name: Build app bundle
-        command: yarn run build:p
+          name: Build app bundle
+          command: yarn run build:p
 
       - run:
           name: Build and push Docker image
