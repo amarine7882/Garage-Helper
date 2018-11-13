@@ -4,10 +4,11 @@
   "description": "Car service assistant",
   "main": "index.jsx",
   "scripts": {
-    "start:p": "node ./server/index.js",
     "start": "nodemon ./server/index.js",
     "build": "webpack-dev-server -d --watch --hot",
-    "test": "jest"
+    "test": "jest",
+    "build:p": "webpack -p",
+    "build:server:p": "webpack -p --config ./serverProd.config.js"
   },
   "repository": {
     "type": "git",
