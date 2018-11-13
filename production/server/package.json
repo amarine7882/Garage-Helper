@@ -1,0 +1,16 @@
+{
+  "name": "Garage-Helper",
+  "version": "1.0.0",
+  "description": "Car service assistant",
+  "main": "index.jsx",
+  "scripts": {
+    "start": "node ./server/index.js"
+  },
+  "dependencies": {
+    "compression": "^1.7.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.4",
+    "moment": "^2.22.2",
+    "mongoose": "^5.3.3"
+  }
+}
