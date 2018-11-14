@@ -19,9 +19,9 @@ jobs:
           command: yarn install
 
       - save_cache:
+          key: dependencies{{ checksum "package.json" }}
           paths:
             - node_modules
-          key: dependencies{{ checksum "package.json" }}
 
       - run:
           name: Run tests
@@ -33,6 +33,8 @@ jobs:
             touch server/config
             echo "exports.MONGO_USER = undefined;" >> server/config
             echo "exports.MONGO_PASS = undefined;" >> server/config
+            touch tf/terraform.tfvars
+            echo "TAG = "$CIRCLE_BUILD_NUM"" >> tf/terraform.tfvars
 
       - run:
           name: Build bundles
@@ -41,9 +43,10 @@ jobs:
             yarn run build:p
 
       - save_cache:
-          key: bundle
+          key: bundle/tf
           paths:
-            - ~/Garage-Helper/production/app
+            - ~/Garage-Helper/production/app/bundle.js
+            - ~/Garage-Helper/tf
 
       - setup_remote_docker
 
@@ -56,7 +59,7 @@ jobs:
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             docker push amarine7882/garage-helper:$TAG
 
-  push-to-s3:
+  deploy:
     docker:
       - image: circleci/python:2.7-jessie
 
@@ -65,15 +68,59 @@ jobs:
     steps:
 
       - restore_cache:
-          key: bundle
+          key: bundle/tf
+
+      - restore_cache:
+          key: tf_state
 
       - run:
           name: Install awscli
           command: sudo pip install awscli
 
       - run:
-          name: Deploy to S3
+          name: Push to S3
           command: aws s3 cp ~/Garage-Helper/production/app/bundle.js s3://garage-helper/app/ --content-type application/javascript --content-encoding gzip --acl public-read
+
+      - run:
+          name: Install terraform
+          command: |
+            wget https://releases.hashicorp.com/terraform/0.9.8/terraform_0.9.8_linux_amd64.zip
+            unzip terraform_0.9.8_linux_amd64.zip
+            sudo mv terraform /usr/local/bin/
+
+      - run:
+          name: Set up deploy envs
+          command: |
+            cd tf
+            touch env.list
+            echo "MONGO_USER=$MONGO_USER" >> env.list
+            echo "MONGO_PASS=$MONGO_PASS" >> env.list
+            echo "AWS_ACCESS_KEY_ID = "$AWS_ACCESS_KEY_ID"" >> terraform.tfvars
+            echo "AWS_SECRET_ACCESS_KEY = "$AWS_SECRET_ACCESS_KEY"" >> terraform.tfvars
+
+      - run:
+          name: Decrypt aws key
+          command: openssl aes-256-cbc -d -in garage-helper-cipher.pem -out garage-helper.pem -k $CIPHER_KEY
+
+      - run:
+          name: Initialize terraform
+          command: |
+            terraform init
+
+      - run:
+          name: Destroy previous deploy
+          command: terraform destroy -auto-approve
+
+      - run:
+          name: Deploy
+          command: terraform apply -auto-approve
+
+      - save_cache:
+          key: tf_state
+          paths:
+            - ~/Garage-Helper/tf/terraform.tfstate
+
+
 
 workflows:
   version: 2
@@ -84,7 +131,7 @@ workflows:
             branches:
               only: master
 
-      - push-to-s3:
+      - deploy:
           requires:
             - test-and-build
           filters:
