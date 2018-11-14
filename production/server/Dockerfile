@@ -6,8 +6,9 @@ COPY . /server
 
 RUN yarn install
 
-EXPOSE 3000
+EXPOSE 80
 
 ENV NODE_ENV production
+ENV PORT 80
 
 CMD ["yarn", "start"]
