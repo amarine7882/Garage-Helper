@@ -73,7 +73,7 @@ jobs:
 
       - run:
           name: Deploy to S3
-          command: aws s3 cp ~/Garage-Helper/production/app/bundle.js s3://garage-helper/app/ --content-type application/javascript --content-encoding gzip
+          command: aws s3 cp ~/Garage-Helper/production/app/bundle.js s3://garage-helper/app/ --content-type application/javascript --content-encoding gzip --acl public-read
 
 workflows:
   version: 2
