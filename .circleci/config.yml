@@ -34,7 +34,7 @@ jobs:
             echo "exports.MONGO_USER = undefined;" >> server/config
             echo "exports.MONGO_PASS = undefined;" >> server/config
             touch tf/terraform.tfvars
-            echo "TAG = "$CIRCLE_BUILD_NUM"" >> tf/terraform.tfvars
+            echo "TAG = $CIRCLE_BUILD_NUM" >> tf/terraform.tfvars
 
       - run:
           name: Build bundles
