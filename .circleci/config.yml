@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build-test:
+  test-and-build:
     docker:
       - image: circleci/node:10.11
 
@@ -77,16 +77,16 @@ jobs:
 
 workflows:
   version: 2
-  build-deploy:
+  test-build-deploy:
     jobs:
-      - build-test:
+      - test-and-build:
           filters:
             branches:
               only: master
 
       - push-to-s3:
           requires:
-            - build-test
+            - test-and-build
           filters:
             branches:
               only: master
