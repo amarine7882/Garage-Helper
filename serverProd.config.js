@@ -14,6 +14,9 @@ fs.readdirSync('node_modules')
 module.exports = {
   entry: `${SRC_DIR}/index.js`,
   target: 'node',
+  node: {
+    __dirname: false
+  },
   mode: 'production',
   output: {
     filename: 'bundle.js',
