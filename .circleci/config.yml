@@ -100,7 +100,7 @@ jobs:
 
       - run:
           name: Decrypt aws key
-          command: openssl aes-256-cbc -d -in garage-helper-cipher.pem -out garage-helper.pem -k $CIPHER_KEY
+          command: openssl aes-256-cbc -d -in ./garage-helper-cipher.pem -out ./garage-helper.pem -k $CIPHER_KEY
 
       - run:
           name: Initialize terraform
