@@ -107,15 +107,20 @@ jobs:
       - run:
           name: Initialize terraform
           command: |
+            cd tf
             terraform init
 
       - run:
           name: Destroy previous deploy
-          command: terraform destroy -auto-approve
+          command: |
+            cd tf
+            terraform destroy -force
 
       - run:
           name: Deploy
-          command: terraform apply -auto-approve
+          command: |
+            cd tf
+            terraform apply -auto-approve
 
       - save_cache:
           key: tf_state
