@@ -5,6 +5,7 @@ WORKDIR /server
 COPY . /server
 
 RUN yarn install
+RUN yarn global add forever
 
 EXPOSE 80
 
