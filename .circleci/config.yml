@@ -84,8 +84,8 @@ jobs:
       - run:
           name: Install terraform
           command: |
-            wget https://releases.hashicorp.com/terraform/0.9.8/terraform_0.9.8_linux_amd64.zip
-            unzip terraform_0.9.8_linux_amd64.zip
+            wget https://releases.hashicorp.com/terraform/0.11.10/terraform_0.11.10_linux_amd64.zip
+            unzip terraform_0.11.10_linux_amd64.zip
             sudo mv terraform /usr/local/bin/
 
       - run:
@@ -114,13 +114,13 @@ jobs:
           name: Destroy previous deploy
           command: |
             cd tf
-            terraform destroy -force
+            terraform destroy -auto-approve
 
       - run:
           name: Deploy
           command: |
             cd tf
-            terraform apply -force
+            terraform apply -auto-approve
 
       - save_cache:
           key: tf_state{{ checksum "tf/terraform.tfstate" }}
