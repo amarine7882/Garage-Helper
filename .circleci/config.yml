@@ -120,7 +120,7 @@ jobs:
           name: Deploy
           command: |
             cd tf
-            terraform apply -auto-approve
+            terraform apply -force
 
       - save_cache:
           key: tf_state{{ checksum "tf/terraform.tfstate" }}
