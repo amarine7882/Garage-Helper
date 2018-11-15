@@ -52,6 +52,11 @@ resource "aws_instance" "garage-helper-service" {
   vpc_security_group_ids = ["${aws_security_group.garage-helper-sg.id}"]
   key_name               = "garage-helper"
 
+  provisioner "file" {
+    source      = "env.list"
+    destination = "/home/ec2-user/env.list"
+  }
+
   provisioner "remote-exec" {
     inline = [
       "sudo yum install -y docker",
