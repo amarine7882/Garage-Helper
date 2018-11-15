@@ -43,7 +43,7 @@ jobs:
             yarn run build:p
 
       - save_cache:
-          key: bundle/tf
+          key: bundle/tf{{ checksum "tf/terraform.tfvars" }}
           paths:
             - ~/Garage-Helper/production/app/bundle.js
             - ~/Garage-Helper/tf
@@ -123,7 +123,7 @@ jobs:
             terraform apply -auto-approve
 
       - save_cache:
-          key: tf_state
+          key: tf_state{{ checksum "tf/terraform.tfstate" }}
           paths:
             - ~/Garage-Helper/tf/terraform.tfstate
 
