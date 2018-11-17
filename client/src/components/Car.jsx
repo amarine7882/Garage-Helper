@@ -1,7 +1,7 @@
 /* eslint react/no-did-update-set-state: 0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Card, Skeleton } from 'antd';
+import { Icon, Card, Skeleton, Modal } from 'antd';
 
 import ServiceItemsContainer from './ServiceItemsContainer';
 import UpdateMileage from './UpdateMileage';
@@ -24,6 +24,7 @@ export default class Car extends Component {
     this.getCarData = this.getCarData.bind(this);
     this.toggleUpdate = this.toggleUpdate.bind(this);
     this.toggleAddServiceItem = this.toggleAddServiceItem.bind(this);
+    this.deleteConfirm = this.deleteConfirm.bind(this);
   }
 
   componentDidMount() {
@@ -60,8 +61,23 @@ export default class Car extends Component {
     this.setState({ isAdding: !isAdding, isUpdating: false });
   }
 
+  deleteConfirm() {
+    const { deleteCar } = this.props;
+    Modal.confirm({
+      title: 'Are you sure you want to delete this car?',
+      content:
+        'You will lose all data and history for this car and its service items. This action cannot be undone',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      iconType: 'exclamation-circle',
+      maskClosable: true,
+      onOk: () => deleteCar()
+    });
+  }
+
   render() {
-    const { displayedCar, userID, deleteCar } = this.props;
+    const { displayedCar, userID } = this.props;
     const {
       carData: { carName, make, model, modelYear, mileage },
       isUpdating,
@@ -149,8 +165,8 @@ export default class Car extends Component {
             <span
               role="button"
               tabIndex={0}
-              onKeyPress={deleteCar}
-              onClick={deleteCar}
+              onKeyPress={this.deleteConfirm}
+              onClick={this.deleteConfirm}
               style={{ outline: 'none' }}
             >
               <Icon
