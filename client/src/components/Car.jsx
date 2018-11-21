@@ -133,7 +133,7 @@ export default class Car extends Component {
     }
 
     return (
-      <Card>
+      <Card style={{ minHeight: '100%' }}>
         <Card
           loading={isLoading}
           style={{ width: 600, margin: '0px auto 30px auto' }}
