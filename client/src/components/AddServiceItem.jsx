@@ -105,7 +105,9 @@ class AddServiceItemTemplate extends Component {
               />
             )}
           </Form.Item>
-          <Button htmlType="submit">Submit</Button>
+          <Button htmlType="submit" style={{ color: '#303f9f' }}>
+            Submit
+          </Button>
         </Form>
       </div>
     );

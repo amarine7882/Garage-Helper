@@ -47,7 +47,9 @@ class UpdateMileageTemplate extends Component {
             ]
           })(<InputNumber min={mileage + 1} style={{ width: 160 }} />)}
         </Form.Item>
-        <Button htmlType="submit">Update</Button>
+        <Button htmlType="submit" style={{ color: '#303f9f' }}>
+          Update
+        </Button>
       </Form>
     );
   }

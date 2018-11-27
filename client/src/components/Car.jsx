@@ -154,7 +154,11 @@ export default class Car extends Component {
               onClick={this.toggleAddServiceItem}
               style={{ outline: 'none', color: '#7F7F7F' }}
             >
-              <Icon type="plus" theme="outlined" style={{ fontSize: '24px', marginRight: 10 }} />
+              <Icon
+                type="plus"
+                theme="outlined"
+                style={{ fontSize: '24px', marginRight: 10, color: '#303f9f' }}
+              />
               Add Service
             </span>,
             <span
@@ -167,7 +171,7 @@ export default class Car extends Component {
               <Icon
                 type="arrow-up"
                 theme="outlined"
-                style={{ fontSize: '24px', marginRight: 10 }}
+                style={{ fontSize: '24px', marginRight: 10, color: '#303f9f' }}
               />
               Update Mileage
             </span>,
