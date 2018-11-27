@@ -81,7 +81,6 @@ export default class Garage extends Component {
         <Sider style={{ height: '80vh', position: 'sticky', top: '90px' }}>
           <Menu
             mode="inline"
-            theme="dark"
             defaultSelectedKeys={['carSelector']}
             defaultOpenKeys={['carSelector']}
           >

@@ -119,13 +119,22 @@ export default class Car extends Component {
     if (isLoading) {
       loader = (
         <div>
-          <Card style={{ width: 500, marginBottom: 10 }}>
+          <Card
+            style={{ width: 500, margin: '0px auto 10px auto', borderRadius: '10px' }}
+            headStyle={{ overflow: 'hidden', borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
+          >
             <Skeleton loading active title />
           </Card>
-          <Card style={{ width: 500, marginBottom: 10 }}>
+          <Card
+            style={{ width: 500, margin: '0px auto 10px auto', borderRadius: '10px' }}
+            headStyle={{ overflow: 'hidden', borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
+          >
             <Skeleton loading active title />
           </Card>
-          <Card style={{ width: 500, marginBottom: 10 }}>
+          <Card
+            style={{ width: 500, margin: '0px auto 10px auto', borderRadius: '10px' }}
+            headStyle={{ overflow: 'hidden', borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
+          >
             <Skeleton loading active title />
           </Card>
         </div>
@@ -133,10 +142,10 @@ export default class Car extends Component {
     }
 
     return (
-      <Card style={{ minHeight: '100%' }}>
+      <div>
         <Card
           loading={isLoading}
-          style={{ width: 600, margin: '0px auto 30px auto' }}
+          style={{ width: 600, margin: '0px auto 30px auto', borderRadius: '10px' }}
           actions={[
             <span
               role="button"
@@ -185,7 +194,7 @@ export default class Car extends Component {
         </Card>
         {serviceItemsToggle}
         {loader}
-      </Card>
+      </div>
     );
   }
 }

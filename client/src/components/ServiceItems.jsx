@@ -42,7 +42,9 @@ export default class ServiceItems extends Component {
             <Card
               key={_id}
               title={serviceName}
-              style={{ width: 500, margin: '0px auto 10px auto' }}
+              style={{ width: 500, margin: '0px auto 10px auto', borderRadius: '10px' }}
+              headStyle={{ overflow: 'hidden', borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
+              hoverable
               actions={[
                 <span
                   role="button"

@@ -59,6 +59,8 @@
     "jest": "^23.6.0",
     "jest-environment-enzyme": "^7.0.1",
     "jest-enzyme": "^7.0.1",
+    "less": "^3.8.1",
+    "less-loader": "^4.1.0",
     "nodemon": "^1.18.4",
     "prettier": "^1.14.3",
     "regenerator-runtime": "^0.12.1",
