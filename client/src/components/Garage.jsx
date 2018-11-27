@@ -78,12 +78,12 @@ export default class Garage extends Component {
 
     return (
       <Layout style={{ padding: '24px 0' }}>
-        <Sider>
+        <Sider style={{ height: '80vh', position: 'sticky', top: '90px' }}>
           <Menu
             mode="inline"
-            theme="dark"
             defaultSelectedKeys={['carSelector']}
             defaultOpenKeys={['carSelector']}
+            style={{ borderColor: '#7F7F7F' }}
           >
             <Menu.Item key="createNewCar" onClick={this.toggleNewCarForm}>
               Create New Car
@@ -101,7 +101,7 @@ export default class Garage extends Component {
             </SubMenu>
           </Menu>
         </Sider>
-        <Content style={{ padding: '0 24px', minHeight: 280 }}>{toggle}</Content>
+        <Content style={{ padding: '0 24px' }}>{toggle}</Content>
       </Layout>
     );
   }

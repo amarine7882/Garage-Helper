@@ -22,10 +22,10 @@ export default class Nav extends Component {
     return (
       <Menu
         mode="horizontal"
-        theme="dark"
         selectedKeys={[activeItem]}
         onClick={this.handleMenuClick}
         style={{ lineHeight: '64px' }}
+        theme="dark"
       >
         <Menu.Item key="garage">
           <Icon type="car" theme="outlined" />

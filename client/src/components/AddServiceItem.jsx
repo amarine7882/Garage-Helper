@@ -67,7 +67,7 @@ class AddServiceItemTemplate extends Component {
     const { getFieldDecorator } = form;
     return (
       <div>
-        <Form onSubmit={this.handleSubmit} style={{ width: 500 }}>
+        <Form onSubmit={this.handleSubmit} style={{ width: 500, margin: 'auto' }}>
           <Form.Item label="Service Name" colon={false}>
             {getFieldDecorator('serviceName', {
               rules: [{ required: true, message: 'Please input a name for the service' }]
@@ -105,7 +105,9 @@ class AddServiceItemTemplate extends Component {
               />
             )}
           </Form.Item>
-          <Button htmlType="submit">Submit</Button>
+          <Button htmlType="submit" style={{ color: '#303f9f' }}>
+            Submit
+          </Button>
         </Form>
       </div>
     );

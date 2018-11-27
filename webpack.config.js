@@ -29,17 +29,37 @@ module.exports = {
           plugins: [
             '@babel/plugin-transform-async-to-generator',
             'react-hot-loader/babel',
-            ['import', { libraryName: 'antd', libraryDirectory: 'es', style: 'css' }]
+            ['import', { libraryName: 'antd', libraryDirectory: 'es', style: true }]
           ]
         }
       },
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        test: /\.less$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'less-loader',
+            options: {
+              modifyVars: {
+                'border-radius-base': '10px',
+                'card-actions-background': 'none',
+                'primary-color': '#303f9f',
+                'card-head-background': 'fade(#001970, 85%)',
+                'card-head-color': '#fff',
+                'layout-header-background': '#001970',
+                'layout-sider-background': 'transparent',
+                'layout-body-background': '#E1E3E5',
+                'menu-bg': 'transparent'
+              },
+              javascriptEnabled: true
+            }
+          }
+        ]
       }
     ]
   },
   resolve: {
-    extensions: ['.js', '.json', '.jsx', '.css']
+    extensions: ['.js', '.json', '.jsx', '.css', '.less']
   }
 };

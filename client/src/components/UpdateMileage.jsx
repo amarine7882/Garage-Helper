@@ -37,7 +37,7 @@ class UpdateMileageTemplate extends Component {
     const { mileage, form } = this.props;
     const { getFieldDecorator } = form;
     return (
-      <Form onSubmit={this.handleSubmit} style={{ margin: 'auto' }}>
+      <Form onSubmit={this.handleSubmit} style={{ margin: 'auto', width: 160 }}>
         <Form.Item label="Enter Current Mileage" colon={false}>
           {getFieldDecorator('updateMileage', {
             initialValue: mileage + 1,
@@ -45,9 +45,11 @@ class UpdateMileageTemplate extends Component {
               { required: true, message: "Please enter your car's current mileage" },
               { validator: this.mileageUpdateValidator }
             ]
-          })(<InputNumber min={mileage + 1} />)}
+          })(<InputNumber min={mileage + 1} style={{ width: 160 }} />)}
         </Form.Item>
-        <Button htmlType="submit">Update</Button>
+        <Button htmlType="submit" style={{ color: '#303f9f' }}>
+          Update
+        </Button>
       </Form>
     );
   }

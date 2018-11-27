@@ -5,7 +5,7 @@ import { Layout } from 'antd';
 import Garage from './Garage';
 import Nav from './Nav';
 
-const { Content, Header } = Layout;
+const { Content, Header, Footer } = Layout;
 
 class App extends Component {
   constructor(props) {
@@ -20,13 +20,14 @@ class App extends Component {
     const { userID } = this.state;
 
     return (
-      <Layout>
+      <Layout style={{ minHeight: '100vh' }}>
         <Header style={{ position: 'fixed', width: '100%', zIndex: 1 }}>
           <Nav />
         </Header>
         <Content style={{ padding: '0 50px', marginTop: 64 }}>
           <Garage userID={userID} />
         </Content>
+        <Footer style={{ textAlign: 'center' }} />
       </Layout>
     );
   }

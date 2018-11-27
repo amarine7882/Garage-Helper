@@ -64,7 +64,9 @@ class NewCarFormTemplate extends Component {
             rules: [{ required: true, message: "Please input your car's mileage" }]
           })(<InputNumber name="mileage" min={0} style={{ width: 300 }} />)}
         </Form.Item>
-        <Button htmlType="submit">Submit</Button>
+        <Button htmlType="submit" style={{ color: '#303f9f' }}>
+          Submit
+        </Button>
       </Form>
     );
   }
