@@ -83,6 +83,7 @@ export default class Garage extends Component {
             mode="inline"
             defaultSelectedKeys={['carSelector']}
             defaultOpenKeys={['carSelector']}
+            style={{ borderColor: '#7F7F7F' }}
           >
             <Menu.Item key="createNewCar" onClick={this.toggleNewCarForm}>
               Create New Car

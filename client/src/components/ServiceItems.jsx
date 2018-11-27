@@ -51,7 +51,7 @@ export default class ServiceItems extends Component {
                   tabIndex={0}
                   onKeyPress={() => completeServiceItem(_id)}
                   onClick={() => completeServiceItem(_id)}
-                  style={{ outline: 'none' }}
+                  style={{ outline: 'none', color: '#7F7F7F' }}
                 >
                   <Icon type="check" theme="outlined" style={{ color: 'green', marginRight: 10 }} />
                   Mark Complete
@@ -61,7 +61,7 @@ export default class ServiceItems extends Component {
                   tabIndex={0}
                   onClick={() => this.deleteConfirm(_id).bind(this)}
                   onKeyPress={() => this.deleteConfirm(_id).bind(this)}
-                  style={{ outline: 'none' }}
+                  style={{ outline: 'none', color: '#7F7F7F' }}
                 >
                   <Icon type="delete" theme="outlined" style={{ color: 'red', marginRight: 10 }} />
                   Delete Service

@@ -152,7 +152,7 @@ export default class Car extends Component {
               tabIndex={0}
               onKeyPress={this.toggleAddServiceItem}
               onClick={this.toggleAddServiceItem}
-              style={{ outline: 'none' }}
+              style={{ outline: 'none', color: '#7F7F7F' }}
             >
               <Icon type="plus" theme="outlined" style={{ fontSize: '24px', marginRight: 10 }} />
               Add Service
@@ -162,7 +162,7 @@ export default class Car extends Component {
               tabIndex={0}
               onKeyPress={this.toggleUpdate}
               onClick={this.toggleUpdate}
-              style={{ outline: 'none' }}
+              style={{ outline: 'none', color: '#7F7F7F' }}
             >
               <Icon
                 type="arrow-up"
@@ -176,7 +176,7 @@ export default class Car extends Component {
               tabIndex={0}
               onKeyPress={this.deleteConfirm}
               onClick={this.deleteConfirm}
-              style={{ outline: 'none' }}
+              style={{ outline: 'none', color: '#7F7F7F' }}
             >
               <Icon
                 type="delete"

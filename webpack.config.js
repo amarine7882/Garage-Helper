@@ -49,6 +49,7 @@ module.exports = {
                 'card-head-color': '#fff',
                 'layout-header-background': '#001970',
                 'layout-sider-background': 'transparent',
+                'layout-body-background': '#E1E3E5',
                 'menu-bg': 'transparent'
               },
               javascriptEnabled: true
